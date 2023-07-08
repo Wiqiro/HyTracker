@@ -36,7 +36,7 @@ class ColorConverter {
     'WHITE': const Color.fromRGBO(255, 255, 255, 1),
     'GRAY': const Color.fromRGBO(170, 170, 170, 1),
     'DARK_GRAY': const Color.fromRGBO(85, 85, 85, 1),
-    'BLACK': const Color.fromRGBO(0, 0, 0, 1),
+    'BLACK': Color.fromRGBO(0, 0, 0, 1),
   };
 
 /*   Color? mcCodeToFlutterColor(String colorCode) {
@@ -46,4 +46,19 @@ class ColorConverter {
   Color? fullNameToFlutterColor(String colorCode) {
     return _fullNameToFlutterColor[colorCode];
   } */
+
+  TextSpan mcFormattingToTextSpan(String string) {
+    var exp = RegExp(r'§[0-9a-f](?:(?!§[0-9a-f]).)+');
+    return TextSpan(
+      children: exp.allMatches(string).map((e) {
+        var match = e.group(0);
+        return TextSpan(
+          text: match?.replaceAll(RegExp(r'§.'), ''),
+          style: TextStyle(
+            color: mcCodeToFlutterColor[match?.substring(0, 2)],
+          ),
+        );
+      }).toList(),
+    );
+  }
 }

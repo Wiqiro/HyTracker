@@ -13,7 +13,7 @@ class StatsMenuScreen extends StatelessWidget {
 
   //final Map<String, dynamic> data;
 
-  StatsMenuScreen({super.key});
+  const StatsMenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

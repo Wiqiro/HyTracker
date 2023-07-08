@@ -49,15 +49,16 @@ class MyApp extends StatelessWidget {
                 toolbarHeight: 60),
           ),
           home: user.isUserSet
-              ? StatsMenuScreen()
+              ? const StatsMenuScreen()
               : FutureBuilder(
                   future: user.getUserData(), //TODO: called too often ?
-                  builder: (ctx, result) =>
-                      (result.hasData && result.data!) ? StatsMenuScreen() : const LoginScreen(),
+                  builder: (ctx, result) => (result.hasData && result.data!)
+                      ? const StatsMenuScreen()
+                      : const LoginScreen(),
                 ),
           routes: {
-            StatsMenuScreen.routeName: (context) => StatsMenuScreen(),
-            BedwarsStatsScreen.routeName: (context) => BedwarsStatsScreen()
+            StatsMenuScreen.routeName: (context) => const StatsMenuScreen(),
+            BedwarsStatsScreen.routeName: (context) => const BedwarsStatsScreen()
           },
         ),
       ),
