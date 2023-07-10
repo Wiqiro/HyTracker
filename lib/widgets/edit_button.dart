@@ -35,7 +35,7 @@ class EditButton extends StatelessWidget {
               ),
             ),
             Image.asset(
-              'assets/edit.png',
+              'assets/images/edit.png',
               height: 26,
             ),
           ],

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/utils/color_converter.dart';
 import 'package:hytracker/utils/ranks.dart';
-import 'package:provider/provider.dart';
 
-import '../providers/user.dart';
+import '../models/player.dart';
 
 class FormattedUsername extends StatelessWidget {
   final double fontSize;
   final InlineSpan prefix;
+  final Player player;
 
   const FormattedUsername({
     required this.fontSize,
+    required this.player,
     this.prefix = const TextSpan(),
     super.key,
   });
@@ -20,8 +21,8 @@ class FormattedUsername extends StatelessWidget {
     return RichText(
       text: TextSpan(
         style: TextStyle(
+          fontFamily: 'Minecraftia',
           fontSize: fontSize,
-          fontWeight: FontWeight.w500,
           shadows: const [
             Shadow(offset: Offset(0.5, 0.5), blurRadius: 2, color: Color(0x55000000)),
           ],
@@ -32,14 +33,10 @@ class FormattedUsername extends StatelessWidget {
   }
 
   TextSpan _globalUsername(BuildContext context) {
-    final String username = Provider.of<UserProvider>(context).username!;
-    final Ranks rank = Provider.of<UserProvider>(context).rank!;
-    final String? plusColor = Provider.of<UserProvider>(context).plusColor;
-    final String? mvpPlusPlusColor = Provider.of<UserProvider>(context).mvpPlusPlusColor;
-    switch (rank) {
+    switch (player.rank) {
       case Ranks.vip:
         return TextSpan(
-          text: '[VIP] $username',
+          text: '[VIP] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GREEN']),
         );
       case Ranks.vipPlus:
@@ -52,13 +49,13 @@ class FormattedUsername extends StatelessWidget {
               style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
             ),
             TextSpan(
-              text: '] $username',
+              text: '] ${player.username}',
             ),
           ],
         );
       case Ranks.mvp:
         return TextSpan(
-          text: '[MVP] $username',
+          text: '[MVP] ${player.username}',
           style: TextStyle(
             color: ColorConverter().fullNameToFlutterColor['AQUA'],
           ),
@@ -70,40 +67,40 @@ class FormattedUsername extends StatelessWidget {
           children: [
             TextSpan(
               text: '+',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[plusColor]),
+              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.plusColor]),
             ),
             TextSpan(
-              text: '] $username',
+              text: '] ${player.username}',
             ),
           ],
         );
       case Ranks.mvpPlusPlus:
         return TextSpan(
           text: '[MVP',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor[mvpPlusPlusColor]),
+          style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.mvpPlusPlusColor]),
           children: [
             TextSpan(
               text: '++',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[plusColor]),
+              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.plusColor]),
             ),
             TextSpan(
-              text: '] $username',
+              text: '] ${player.username}',
             ),
           ],
         );
       case Ranks.gameMaster:
         return TextSpan(
-          text: '[GM] $username',
+          text: '[GM] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['DARK_GREEN']),
         );
       case Ranks.admin:
         return TextSpan(
-          text: '[ADMIN] $username',
+          text: '[ADMIN] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['RED']),
         );
       case Ranks.owner:
         return TextSpan(
-          text: '[OWNER] $username',
+          text: '[OWNER] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['RED']),
         );
       case Ranks.youtube:
@@ -116,7 +113,7 @@ class FormattedUsername extends StatelessWidget {
               style: TextStyle(color: ColorConverter().fullNameToFlutterColor['WHITE']),
             ),
             TextSpan(
-              text: '] $username',
+              text: '] ${player.username}',
             ),
           ],
         );
@@ -130,23 +127,23 @@ class FormattedUsername extends StatelessWidget {
               style: TextStyle(color: ColorConverter().fullNameToFlutterColor['AQUA']),
             ),
             TextSpan(
-              text: '] $username',
+              text: '] ${player.username}',
             ),
           ],
         );
       case Ranks.mojang:
         return TextSpan(
-          text: '[MOJANG] $username',
+          text: '[MOJANG] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
         );
       case Ranks.events:
         return TextSpan(
-          text: '[EVENTS] $username',
+          text: '[EVENTS] ${player.username}',
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
         );
       default:
         return TextSpan(
-          text: username,
+          text: player.username,
           style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GRAY']),
         );
     }

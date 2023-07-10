@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Constants {
-  static const apiKey = '83c265b4-41fe-4877-908e-005beb44265a';
+  static const apiKey = 'fd83272b-0f39-49c6-9432-2e34a582ad62';
   static final dummyData = jsonDecode('''
 {
     "success": true,

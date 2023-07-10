@@ -11,6 +11,8 @@ import '../widgets/search_bar.dart';
 import '../widgets/profile_picture.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = '/login-screen';
+
   const LoginScreen({super.key});
 
   @override
@@ -18,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Future<void> _uuidInputCallback(String username) async {
+  Future<void> _uuidInputCallback(BuildContext context, String username) async {
     try {
       await Provider.of<UserProvider>(context, listen: false).setMcUserData(username);
     } catch (error) {
@@ -26,12 +28,25 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _apiKeyInputCallback(String key) async {
+  Future<void> _apiKeyInputCallback(BuildContext context, String key) async {
     try {
       await Provider.of<UserProvider>(context, listen: false).setHypixelUserData(key);
     } catch (error) {
       return;
     }
+  }
+
+  @override
+  void initState() {
+    Provider.of<UserProvider>(context, listen: false).getUserData().then((value) {
+      if (value) {
+        Navigator.of(context).popAndPushNamed(
+          StatsMenuScreen.routeName,
+          arguments: Provider.of<UserProvider>(context, listen: false).player,
+        );
+      }
+    });
+    super.initState();
   }
 
   @override
@@ -41,26 +56,27 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text('Welcome'),
       ),
       body: Container(
-        child: !Provider.of<UserProvider>(context).isUuidSet
-            ? Center(
-                child: Padding(
+        child: Center(
+          child: !Provider.of<UserProvider>(context).isUuidSet
+              ? Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: CustomSearchBar(
                     hint: 'Minecraft username',
-                    callback: (input) => _uuidInputCallback(input),
+                    callback: (input) => _uuidInputCallback(context, input),
                   ),
-                ),
-              )
-            : Center(
-                child: Column(
+                )
+              : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const ProfilePicture(),
                     const SizedBox(height: 20),
                     Provider.of<UserProvider>(context).isApiSet
-                        ? const FormattedUsername(fontSize: 26)
+                        ? FormattedUsername(
+                            player: Provider.of<UserProvider>(context).player,
+                            fontSize: 26,
+                          )
                         : Text(
-                            Provider.of<UserProvider>(context).username!,
+                            Provider.of<UserProvider>(context).username,
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                           ),
                     const SizedBox(height: 60),
@@ -73,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 40),
                             child: CustomSearchBar(
                               hint: 'Minecraft username',
-                              callback: (input) => _uuidInputCallback(input),
+                              callback: (input) => _uuidInputCallback(context, input),
                             ),
                           ),
                     const SizedBox(height: 20),
@@ -86,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
                             child: CustomSearchBar(
                               hint: ' API Key',
-                              callback: (input) => _apiKeyInputCallback(Constants.apiKey),
+                              callback: (input) => _apiKeyInputCallback(context, Constants.apiKey),
                             ),
                           ),
                     const SizedBox(height: 20),
@@ -95,13 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: 'Save',
                             callback: () {
                               Provider.of<UserProvider>(context, listen: false).saveUserData();
-                              Navigator.of(context).popAndPushNamed(StatsMenuScreen.routeName);
+                              Navigator.of(context).popAndPushNamed(
+                                StatsMenuScreen.routeName,
+                                arguments: Provider.of<UserProvider>(context, listen: false).player,
+                              );
                             },
                           )
                         : const SizedBox(height: 60),
                   ],
                 ),
-              ),
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hytracker/providers/user.dart';
 import 'package:hytracker/screens/login_screen.dart';
 import 'package:hytracker/screens/stats_gamemodes_screens/bedwars_stats_screen.dart';
+import 'package:hytracker/screens/stats_gamemodes_screens/skywars_stats_screen.dart';
 import 'package:hytracker/screens/stats_menu_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -42,23 +43,19 @@ class MyApp extends StatelessWidget {
               secondaryContainer: Color.fromRGBO(215, 215, 215, 1),
             ),
             appBarTheme: const AppBarTheme(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                titleTextStyle:
-                    TextStyle(fontWeight: FontWeight.w500, fontSize: 30, color: Colors.black),
-                toolbarHeight: 60),
+              backgroundColor: Colors.white,
+              centerTitle: true,
+              titleTextStyle:
+                  TextStyle(fontWeight: FontWeight.w500, fontSize: 30, color: Colors.black),
+              toolbarHeight: 60,
+            ),
           ),
-          home: user.isUserSet
-              ? const StatsMenuScreen()
-              : FutureBuilder(
-                  future: user.getUserData(), //TODO: called too often ?
-                  builder: (ctx, result) => (result.hasData && result.data!)
-                      ? const StatsMenuScreen()
-                      : const LoginScreen(),
-                ),
+          home: const LoginScreen(),
           routes: {
+            LoginScreen.routeName: (context) => const LoginScreen(),
             StatsMenuScreen.routeName: (context) => const StatsMenuScreen(),
-            BedwarsStatsScreen.routeName: (context) => const BedwarsStatsScreen()
+            BedwarsStatsScreen.routeName: (context) => const BedwarsStatsScreen(),
+            SkywarsStatsScreen.routeName: (context) => const SkywarsStatsScreen()
           },
         ),
       ),

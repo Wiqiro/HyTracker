@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/models/player.dart';
-import 'package:hytracker/utils/color_converter.dart';
-import 'package:hytracker/widgets/formatted_username.dart';
 
+import '../../utils/color_converter.dart';
+import '../../widgets/formatted_username.dart';
 import '../../widgets/profile_options.dart';
 
-class BedwarsStatsScreen extends StatelessWidget {
-  static const routeName = '/stats-screens/bedwars';
+class SkywarsStatsScreen extends StatelessWidget {
+  static const routeName = '/stats-screens/skywars';
 
-  const BedwarsStatsScreen({super.key});
+  const SkywarsStatsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final player = ModalRoute.of(context)!.settings.arguments as Player;
-    final stats = player.bedwarsStats;
+    final stats = player.skywarsStats;
     //print(stats.getFormattedPrefix);
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +29,7 @@ class BedwarsStatsScreen extends StatelessWidget {
           FormattedUsername(
             player: player,
             fontSize: 20,
-            prefix: ColorConverter().mcFormattingToTextSpan('${stats.getFormattedPrefix} '),
+            prefix: ColorConverter().mcFormattingToTextSpan(stats.prefix),
           ),
           const SizedBox(
             width: double.infinity,

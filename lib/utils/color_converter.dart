@@ -54,6 +54,7 @@ class ColorConverter {
         var match = e.group(0);
         return TextSpan(
           text: match?.replaceAll(RegExp(r'§.'), ''),
+          //TODO: maybe nest to handle other styles
           style: TextStyle(
             color: mcCodeToFlutterColor[match?.substring(0, 2)],
           ),

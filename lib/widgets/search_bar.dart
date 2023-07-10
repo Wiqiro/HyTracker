@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-class CustomSearchBar extends StatelessWidget {
+class CustomSearchBar extends StatefulWidget {
   final String hint;
   final void Function(String input) callback;
 
-  CustomSearchBar({
+  const CustomSearchBar({
     required this.hint,
     required this.callback,
     super.key,
   });
 
+  @override
+  State<CustomSearchBar> createState() => _CustomSearchBarState();
+}
+
+class _CustomSearchBarState extends State<CustomSearchBar> {
   var _input = '';
 
   @override
@@ -26,7 +31,7 @@ class CustomSearchBar extends StatelessWidget {
             ),
             child: TextField(
               decoration: InputDecoration(
-                hintText: hint,
+                hintText: widget.hint,
                 border: InputBorder.none,
               ),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
@@ -42,7 +47,7 @@ class CustomSearchBar extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            callback(_input);
+            widget.callback(_input);
           },
           child: Container(
             height: 50,
@@ -54,7 +59,7 @@ class CustomSearchBar extends StatelessWidget {
             ),
             child: Center(
               child: Image.asset(
-                'assets/search.png',
+                'assets/images/search.png',
                 height: 22,
               ),
             ),
