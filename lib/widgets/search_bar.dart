@@ -39,6 +39,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               onChanged: (value) {
                 _input = value;
               },
+              onSubmitted: (value) => widget.callback(value.trim()),
             ),
           ),
         ),
@@ -47,7 +48,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         ),
         InkWell(
           onTap: () {
-            widget.callback(_input);
+            widget.callback(_input.trim());
           },
           child: Container(
             height: 50,

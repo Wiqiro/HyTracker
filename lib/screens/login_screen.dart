@@ -21,19 +21,34 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Future<void> _uuidInputCallback(BuildContext context, String username) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+
     try {
       await Provider.of<UserProvider>(context, listen: false).setMcUserData(username);
     } catch (error) {
       return;
     }
+    if (context.mounted) Navigator.of(context).pop();
   }
 
   Future<void> _apiKeyInputCallback(BuildContext context, String key) async {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
     try {
       await Provider.of<UserProvider>(context, listen: false).setHypixelUserData(key);
     } catch (error) {
       return;
     }
+    if (context.mounted) Navigator.of(context).pop();
   }
 
   @override

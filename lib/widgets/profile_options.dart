@@ -19,8 +19,8 @@ class ProfileOptions extends StatelessWidget {
           border: Border.all(),
           borderRadius: BorderRadius.circular(10),
         ),
-        width: 44,
-        height: 44,
+        width: 40,
+        height: 40,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(9),
           child: Image.memory(

@@ -1,9 +1,9 @@
 import 'package:hytracker/models/stat_record.dart';
 
 class SkywarsStats extends StatRecord {
+  late final int experience;
   late final double level;
   late final String prefix;
-  late final int experience;
   late final String prestige;
   late final int coins;
   late final int lootChests;
@@ -15,9 +15,11 @@ class SkywarsStats extends StatRecord {
   late final SkywarsModeStats teamsInsane;
 
   SkywarsStats.fromRawData(Map<String, dynamic> data) {
-    level = _level(60);
-    prefix = data['levelFormattedWithBrackets'];
     experience = data['skywars_experience'].toInt();
+    level = _level(experience);
+    prefix = data.containsKey('levelFormattedWithBrackets')
+        ? data['levelFormattedWithBrackets']
+        : '§7[${level.floor()}]';
 
     overall = SkywarsModeStats(
       kills: 0,

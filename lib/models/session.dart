@@ -37,7 +37,7 @@ class Session {
     return [..._records];
   }
 
-  Future<void> addStatRecord(BuildContext context) async {
+  /* Future<void> addStatRecord(BuildContext context) async {
     final apiKey = Provider.of<UserProvider>(context, listen: false).apiKey;
     final uuid = Provider.of<UserProvider>(context, listen: false).uuid;
 
@@ -51,5 +51,5 @@ class Session {
     } catch (error) {
       rethrow;
     }
-  }
+  } */
 }
