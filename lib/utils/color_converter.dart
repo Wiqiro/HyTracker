@@ -1,51 +1,49 @@
 import 'package:flutter/material.dart';
 
 class ColorConverter {
-  final Map<String, Color> mcCodeToFlutterColor = {
-    '§4': const Color.fromRGBO(170, 0, 0, 1),
-    '§c': const Color.fromRGBO(255, 85, 85, 1),
-    '§6': const Color.fromRGBO(255, 170, 0, 1),
-    '§e': const Color.fromRGBO(255, 255, 85, 1),
-    '§2': const Color.fromRGBO(0, 170, 0, 1),
-    '§a': const Color.fromRGBO(85, 255, 85, 1),
-    '§b': const Color.fromRGBO(85, 255, 255, 1),
-    '§3': const Color.fromRGBO(0, 170, 170, 1),
-    '§1': const Color.fromRGBO(0, 0, 170, 1),
-    '§9': const Color.fromRGBO(85, 85, 255, 1),
-    '§d': const Color.fromRGBO(255, 85, 255, 1),
-    '§5': const Color.fromRGBO(170, 0, 170, 1),
-    '§f': const Color.fromRGBO(255, 255, 255, 1),
-    '§7': const Color.fromRGBO(170, 170, 170, 1),
-    '§8': const Color.fromRGBO(85, 85, 85, 1),
-    '§0': const Color.fromRGBO(0, 0, 0, 1),
-  };
-
-  final Map<String, Color> fullNameToFlutterColor = {
-    'DARK_RED': const Color.fromRGBO(170, 0, 0, 1),
-    'RED': const Color.fromRGBO(255, 85, 85, 1),
-    'GOLD': const Color.fromRGBO(255, 170, 0, 1),
-    'YELLOW': const Color.fromRGBO(255, 255, 85, 1),
-    'DARK_GREEN': const Color.fromRGBO(0, 170, 0, 1),
-    'GREEN': const Color.fromRGBO(85, 255, 85, 1),
-    'AQUA': const Color.fromRGBO(85, 255, 255, 1),
-    'DARK_AQUA': const Color.fromRGBO(0, 170, 170, 1),
-    'DARK_BLUE': const Color.fromRGBO(0, 0, 170, 1),
-    'BLUE': const Color.fromRGBO(85, 85, 255, 1),
-    'LIGHT_PURPLE': const Color.fromRGBO(255, 85, 255, 1),
-    'DARK_PURPLE': const Color.fromRGBO(170, 0, 170, 1),
-    'WHITE': const Color.fromRGBO(255, 255, 255, 1),
-    'GRAY': const Color.fromRGBO(170, 170, 170, 1),
-    'DARK_GRAY': const Color.fromRGBO(85, 85, 85, 1),
-    'BLACK': Color.fromRGBO(0, 0, 0, 1),
-  };
-
-/*   Color? mcCodeToFlutterColor(String colorCode) {
-    return _mcCodeToFlutterColor[colorCode];
+  Color mcCodeToColor(String code) {
+    return switch (code) {
+      '§4' => const Color(0xffaa0000),
+      '§c' => const Color(0xffff5555),
+      '§6' => const Color(0xffffaa00),
+      '§e' => const Color(0xffffff55),
+      '§2' => const Color(0xff00aa00),
+      '§a' => const Color(0xff55ff55),
+      '§b' => const Color(0xff55ffff),
+      '§3' => const Color(0xff00aaaa),
+      '§1' => const Color(0xff0000aa),
+      '§9' => const Color(0xff5555ff),
+      '§d' => const Color(0xffff55ff),
+      '§5' => const Color(0xffaa00aa),
+      '§f' => const Color(0xffffffff),
+      '§7' => const Color(0xffaaaaaa),
+      '§8' => const Color(0xff555555),
+      '§0' => const Color(0xff000000),
+      _ => const Color(0xff000000)
+    };
   }
 
-  Color? fullNameToFlutterColor(String colorCode) {
-    return _fullNameToFlutterColor[colorCode];
-  } */
+  Color mcNameToColor(String name) {
+    return switch (name.toLowerCase()) {
+      'dark_red' => const Color(0xffaa0000),
+      'red' => const Color(0xffff5555),
+      'gold' => const Color(0xffffaa00),
+      'yellow' => const Color(0xffffff55),
+      'dark_green' => const Color(0xff00aa00),
+      'green' => const Color(0xff55ff55),
+      'aqua' => const Color(0xff55ffff),
+      'dark_aqua' => const Color(0xff00aaaa),
+      'dark_blue' => const Color(0xff0000aa),
+      'blue' => const Color(0xff5555ff),
+      'light_purple' => const Color(0xffff55ff),
+      'dark_purple' => const Color(0xffaa00aa),
+      'white' => const Color(0xffffffff),
+      'gray' => const Color(0xffaaaaaa),
+      'dark_gray' => const Color(0xff555555),
+      'black' => const Color(0xff000000),
+      _ => const Color(0xff000000)
+    };
+  }
 
   TextSpan mcFormattingToTextSpan(String string) {
     var exp = RegExp(r'§[0-9a-f](?:(?!§[0-9a-f]).)+');
@@ -56,7 +54,7 @@ class ColorConverter {
           text: match?.replaceAll(RegExp(r'§.'), ''),
           //TODO: maybe nest to handle other styles
           style: TextStyle(
-            color: mcCodeToFlutterColor[match?.substring(0, 2)],
+            color: mcCodeToColor(match!.substring(0, 2)),
           ),
         );
       }).toList(),

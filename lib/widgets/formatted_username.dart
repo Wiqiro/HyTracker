@@ -33,20 +33,21 @@ class FormattedUsername extends StatelessWidget {
   }
 
   TextSpan _globalUsername(BuildContext context) {
+    //TODO: replace by creating formatted string
     switch (player.rank) {
       case Ranks.vip:
         return TextSpan(
           text: '[VIP] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GREEN']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('GREEN')),
         );
       case Ranks.vipPlus:
         return TextSpan(
           text: '[VIP',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GREEN']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('GREEN')),
           children: [
             TextSpan(
               text: '+',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
+              style: TextStyle(color: ColorConverter().mcNameToColor('GOLD')),
             ),
             TextSpan(
               text: '] ${player.username}',
@@ -57,17 +58,17 @@ class FormattedUsername extends StatelessWidget {
         return TextSpan(
           text: '[MVP] ${player.username}',
           style: TextStyle(
-            color: ColorConverter().fullNameToFlutterColor['AQUA'],
+            color: ColorConverter().mcNameToColor('AQUA'),
           ),
         );
       case Ranks.mvpPlus:
         return TextSpan(
           text: '[MVP',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['AQUA']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('AQUA')),
           children: [
             TextSpan(
               text: '+',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.plusColor]),
+              style: TextStyle(color: ColorConverter().mcNameToColor(player.plusColor!)),
             ),
             TextSpan(
               text: '] ${player.username}',
@@ -77,11 +78,11 @@ class FormattedUsername extends StatelessWidget {
       case Ranks.mvpPlusPlus:
         return TextSpan(
           text: '[MVP',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.mvpPlusPlusColor]),
+          style: TextStyle(color: ColorConverter().mcNameToColor(player.mvpPlusPlusColor!)),
           children: [
             TextSpan(
               text: '++',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor[player.plusColor]),
+              style: TextStyle(color: ColorConverter().mcNameToColor(player.plusColor!)),
             ),
             TextSpan(
               text: '] ${player.username}',
@@ -91,26 +92,26 @@ class FormattedUsername extends StatelessWidget {
       case Ranks.gameMaster:
         return TextSpan(
           text: '[GM] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['DARK_GREEN']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('DARK_GREEN')),
         );
       case Ranks.admin:
         return TextSpan(
           text: '[ADMIN] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['RED']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('RED')),
         );
       case Ranks.owner:
         return TextSpan(
           text: '[OWNER] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['RED']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('RED')),
         );
       case Ranks.youtube:
         return TextSpan(
           text: '[',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['RED']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('RED')),
           children: [
             TextSpan(
               text: 'YOUTUBE',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor['WHITE']),
+              style: TextStyle(color: ColorConverter().mcNameToColor('WHITE')),
             ),
             TextSpan(
               text: '] ${player.username}',
@@ -120,11 +121,11 @@ class FormattedUsername extends StatelessWidget {
       case Ranks.pigPlusPlusPlus:
         return TextSpan(
           text: '[PIG',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['LIGHT_PURPLE']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('LIGHT_PURPLE')),
           children: [
             TextSpan(
               text: '+++',
-              style: TextStyle(color: ColorConverter().fullNameToFlutterColor['AQUA']),
+              style: TextStyle(color: ColorConverter().mcNameToColor('AQUA')),
             ),
             TextSpan(
               text: '] ${player.username}',
@@ -134,17 +135,17 @@ class FormattedUsername extends StatelessWidget {
       case Ranks.mojang:
         return TextSpan(
           text: '[MOJANG] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('GOLD')),
         );
       case Ranks.events:
         return TextSpan(
           text: '[EVENTS] ${player.username}',
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GOLD']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('GOLD')),
         );
       default:
         return TextSpan(
           text: player.username,
-          style: TextStyle(color: ColorConverter().fullNameToFlutterColor['GRAY']),
+          style: TextStyle(color: ColorConverter().mcNameToColor('GRAY')),
         );
     }
   }

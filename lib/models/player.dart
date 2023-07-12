@@ -29,61 +29,31 @@ class Player {
 
   _setRank(Map<String, dynamic> data) {
     if (data['player'].containsKey('prefix')) {
-      switch (data['player']['prefix']) {
-        case '§d[PIG§b+++§d]':
-          rank = Ranks.pigPlusPlusPlus;
-          break;
-        case '§c[OWNER]':
-          rank = Ranks.owner;
-          break;
-        case '§6[MOJANG]':
-          rank = Ranks.mojang;
-          break;
-        case '§6[EVENTS]':
-          rank = Ranks.events;
-          break;
-        default:
-          rank = Ranks.none;
-          break;
-      }
+      rank = switch (data['player']['prefix']) {
+        '§d[PIG§b+++§d]' => Ranks.pigPlusPlusPlus,
+        '§c[OWNER]' => Ranks.owner,
+        '§6[MOJANG]' => Ranks.mojang,
+        '§6[EVENTS]' => Ranks.events,
+        _ => Ranks.none,
+      };
     } else if (data['player'].containsKey('rank')) {
-      switch (data['player']['rank']) {
-        case 'GAME_MASTER':
-          rank = Ranks.gameMaster;
-          break;
-        case 'ADMIN':
-          rank = Ranks.admin;
-          break;
-        case 'YOUTUBER':
-          rank = Ranks.youtube;
-          break;
-        default:
-          rank = Ranks.none;
-          break;
-      }
+      rank = switch (data['player']['rank']) {
+        'GAME_MASTER' => Ranks.gameMaster,
+        'ADMIN' => Ranks.admin,
+        'YOUTUBER' => Ranks.youtube,
+        _ => Ranks.none,
+      };
     } else if (data['player'].containsKey('newPackageRank')) {
-      switch (data['player']['newPackageRank']) {
-        case 'VIP':
-          rank = Ranks.vip;
-          break;
-        case 'VIP_PLUS':
-          rank = Ranks.vipPlus;
-          break;
-        case 'MVP':
-          rank = Ranks.mvp;
-          break;
-        case 'MVP_PLUS':
-          if (data['player'].containsKey('monthlyPackageRank') &&
-              data['player']['monthlyPackageRank'] == 'SUPERSTAR') {
-            rank = Ranks.mvpPlusPlus;
-          } else {
-            rank = Ranks.mvpPlus;
-          }
-          break;
-        default:
-          rank = Ranks.none;
-          break;
-      }
+      rank = switch (data['player']['newPackageRank']) {
+        'VIP' => Ranks.vip,
+        'VIP_PLUS' => Ranks.vipPlus,
+        'MVP' => Ranks.mvp,
+        'MVP_PLUS' => (data['player'].containsKey('monthlyPackageRank') &&
+                data['player']['monthlyPackageRank'] == 'SUPERSTAR')
+            ? Ranks.mvpPlusPlus
+            : Ranks.mvpPlus,
+        _ => Ranks.none,
+      };
     } else {
       rank = Ranks.none;
     }

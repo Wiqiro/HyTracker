@@ -19,54 +19,46 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Container(
-            height: 50,
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+      ),
+      child: Stack(
+        alignment: AlignmentDirectional.centerEnd,
+        children: [
+          TextField(
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              border: InputBorder.none,
+              counterText: '',
             ),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: widget.hint,
-                border: InputBorder.none,
-              ),
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
-              textAlign: TextAlign.center,
-              onChanged: (value) {
-                _input = value;
-              },
-              onSubmitted: (value) => widget.callback(value.trim()),
-            ),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            textAlign: TextAlign.center,
+            onChanged: (value) {
+              _input = value;
+            },
+            onSubmitted: (value) => widget.callback(value.trim()),
+            maxLength: 16,
           ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        InkWell(
-          onTap: () {
-            widget.callback(_input.trim());
-          },
-          child: Container(
-            height: 50,
-            width: 50,
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-            child: Center(
-              child: Image.asset(
-                'assets/images/search.png',
-                height: 22,
+          GestureDetector(
+            onTap: () {
+              widget.callback(_input.trim());
+            },
+            child: SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(
+                child: Image.asset(
+                  'assets/images/search.png',
+                  height: 22,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

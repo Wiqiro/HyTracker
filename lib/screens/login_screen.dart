@@ -31,9 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await Provider.of<UserProvider>(context, listen: false).setMcUserData(username);
     } catch (error) {
-      return;
+      rethrow;
+    } finally {
+      if (context.mounted) Navigator.of(context).pop();
     }
-    if (context.mounted) Navigator.of(context).pop();
   }
 
   Future<void> _apiKeyInputCallback(BuildContext context, String key) async {
@@ -46,9 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await Provider.of<UserProvider>(context, listen: false).setHypixelUserData(key);
     } catch (error) {
-      return;
+      rethrow;
+    } finally {
+      if (context.mounted) Navigator.of(context).pop();
     }
-    if (context.mounted) Navigator.of(context).pop();
   }
 
   @override

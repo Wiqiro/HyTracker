@@ -29,14 +29,14 @@ class BedwarsStatsScreen extends StatelessWidget {
           FormattedUsername(
             player: player,
             fontSize: 20,
-            prefix: ColorConverter().mcFormattingToTextSpan('${stats.getFormattedPrefix} '),
+            prefix: ColorConverter().mcFormattingToTextSpan('${stats.prefix} '),
           ),
           const SizedBox(
             width: double.infinity,
             height: 50,
           ),
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(

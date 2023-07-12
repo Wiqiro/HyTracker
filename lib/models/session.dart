@@ -1,12 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 import 'stat_record.dart';
 import '../utils/game_types.dart';
-import '../providers/user.dart';
 
 class Session {
   final String id;
@@ -37,19 +32,5 @@ class Session {
     return [..._records];
   }
 
-  /* Future<void> addStatRecord(BuildContext context) async {
-    final apiKey = Provider.of<UserProvider>(context, listen: false).apiKey;
-    final uuid = Provider.of<UserProvider>(context, listen: false).uuid;
-
-    final url = Uri.parse(
-      'https://api.hypixel.net/player?key=$apiKey&uuid=$uuid',
-    );
-
-    try {
-      final response = await http.get(url);
-      final data = json.decode(response.body) as Map<String, dynamic>;
-    } catch (error) {
-      rethrow;
-    }
-  } */
+  Future<void> addStatRecord(BuildContext context) async {}
 }

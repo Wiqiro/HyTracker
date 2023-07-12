@@ -45,7 +45,6 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
 
         if (context.mounted) {
           if (context.mounted) Navigator.of(context).pop();
-          print(replace);
           replace
               ? Navigator.of(context).pushNamed(StatsMenuScreen.routeName, arguments: newPlayer)
               : Navigator.of(context)

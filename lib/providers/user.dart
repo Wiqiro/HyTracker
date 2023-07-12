@@ -21,11 +21,11 @@ class UserProvider with ChangeNotifier {
 
   Future<void> setMcUserData(String username) async {
     try {
-      final _uuidData = await HttpRequests().getUuidFromUsername(username);
+      final uuidData = await HttpRequests().getUuidFromUsername(username);
 
-      avatar = await HttpRequests().getUserAvatar(_uuidData['id']);
-      this.username = _uuidData['name'];
-      _uuid = _uuidData['id'];
+      avatar = await HttpRequests().getUserAvatar(uuidData['id']);
+      this.username = uuidData['name'];
+      _uuid = uuidData['id'];
 
       isUuidSet = true;
       if (isApiSet) {
@@ -110,11 +110,9 @@ class UserProvider with ChangeNotifier {
 
       isUserSet = true;
       notifyListeners();
-      print('ok');
       return true;
     } catch (error) {
       logout();
-      print('not ok');
       return false; //TODO: throw all errors and remove return statement
     }
   }
