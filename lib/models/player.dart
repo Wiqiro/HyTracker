@@ -1,13 +1,10 @@
 import 'package:hytracker/models/stat_record_models/bedwars_stats.dart';
 import 'package:hytracker/models/stat_record_models/skywars_stats.dart';
-import 'package:hytracker/utils/ranks.dart';
+import 'package:hytracker/utils/color_converter.dart';
 
 class Player {
   final String username;
-
-  late final Ranks rank;
-  late final String? plusColor;
-  late final String? mvpPlusPlusColor;
+  late final String formattedUsername;
 
   late final double networkLvl;
   late final int experience;
@@ -22,55 +19,41 @@ class Player {
   late final SkywarsStats skywarsStats;
 
   Player.fromRawData({required this.username, required Map<String, dynamic> data}) {
-    _setRank(data);
+    formattedUsername = _formattedUsername(data);
     bedwarsStats = BedwarsStats.fromRawData(data['player']['stats']['Bedwars']);
     skywarsStats = SkywarsStats.fromRawData(data['player']['stats']['SkyWars']);
   }
 
-  _setRank(Map<String, dynamic> data) {
+  String _formattedUsername(Map<String, dynamic> data) {
     if (data['player'].containsKey('prefix')) {
-      rank = switch (data['player']['prefix']) {
-        '§d[PIG§b+++§d]' => Ranks.pigPlusPlusPlus,
-        '§c[OWNER]' => Ranks.owner,
-        '§6[MOJANG]' => Ranks.mojang,
-        '§6[EVENTS]' => Ranks.events,
-        _ => Ranks.none,
+      return switch (data['player']['prefix']) {
+        '§d[PIG§b+++§d]' => '§d[PIG§b+++§d] $username',
+        '§c[OWNER]' => '§c[OWNER] $username',
+        '§6[MOJANG]' => '§6[MOJANG] $username',
+        '§6[EVENTS]' => '§6[EVENTS] $username',
+        _ => '§7$username',
       };
     } else if (data['player'].containsKey('rank')) {
-      rank = switch (data['player']['rank']) {
-        'GAME_MASTER' => Ranks.gameMaster,
-        'ADMIN' => Ranks.admin,
-        'YOUTUBER' => Ranks.youtube,
-        _ => Ranks.none,
+      return switch (data['player']['rank']) {
+        'GAME_MASTER' => '§2[GM] $username',
+        'ADMIN' => '§c[ADMIN] $username',
+        'YOUTUBER' => '§c[§fYOUTUBE§c] $username',
+        _ => '§7$username',
       };
     } else if (data['player'].containsKey('newPackageRank')) {
-      rank = switch (data['player']['newPackageRank']) {
-        'VIP' => Ranks.vip,
-        'VIP_PLUS' => Ranks.vipPlus,
-        'MVP' => Ranks.mvp,
-        'MVP_PLUS' => (data['player'].containsKey('monthlyPackageRank') &&
-                data['player']['monthlyPackageRank'] == 'SUPERSTAR')
-            ? Ranks.mvpPlusPlus
-            : Ranks.mvpPlus,
-        _ => Ranks.none,
+      return switch (data['player']['newPackageRank']) {
+        'VIP' => '§a[VIP] $username',
+        'VIP_PLUS' => '§a[VIP§6+§a] $username',
+        'MVP' => '§b[MVP] $username',
+        'MVP_PLUS' => (data['player'].containsKey('monthlyPackageRank') && data['player']['monthlyPackageRank'] == 'SUPERSTAR')
+            ? (data['player'].containsKey('monthlyRankColor') && data['player']['monthlyRankColor'] == 'AQUA'
+                ? '§b[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}++§b] $username'
+                : '§6[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}++§6] $username')
+            : '§b[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}+§b] $username',
+        _ => '§7$username',
       };
     } else {
-      rank = Ranks.none;
-    }
-
-    if (rank == Ranks.mvpPlus || rank == Ranks.mvpPlusPlus) {
-      plusColor =
-          data['player'].containsKey('rankPlusColor') ? data['player']['rankPlusColor'] : 'RED';
-    } else {
-      plusColor = null;
-    }
-
-    if (rank == Ranks.mvpPlusPlus) {
-      data['player'].containsKey('monthlyRankColor')
-          ? mvpPlusPlusColor = data['player']['monthlyRankColor']
-          : 'GOLD';
-    } else {
-      mvpPlusPlusColor = null;
+      return '§7$username';
     }
   }
 }

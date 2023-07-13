@@ -81,7 +81,7 @@ class UserProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> getUserData() async {
+  Future<bool> tryAutoLogin() async {
     try {
       final preferences = await SharedPreferences.getInstance();
       if (!preferences.containsKey('userData')) {

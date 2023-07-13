@@ -14,7 +14,6 @@ class BedwarsStatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = ModalRoute.of(context)!.settings.arguments as Player;
     final stats = player.bedwarsStats;
-    //print(stats.getFormattedPrefix);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Player stats'),
@@ -27,9 +26,8 @@ class BedwarsStatsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           FormattedUsername(
-            player: player,
             fontSize: 20,
-            prefix: ColorConverter().mcFormattingToTextSpan('${stats.prefix} '),
+            text: '${stats.prefix} ${player.formattedUsername}',
           ),
           const SizedBox(
             width: double.infinity,

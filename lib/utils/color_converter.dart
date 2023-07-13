@@ -23,6 +23,28 @@ class ColorConverter {
     };
   }
 
+  String colorNameToCode(String name) {
+    return switch (name.toLowerCase()) {
+      'dark_red' => '§4',
+      'red' => '§c',
+      'gold' => '§6',
+      'yellow' => '§e',
+      'dark_green' => '§2',
+      'green' => '§a',
+      'aqua' => '§b',
+      'dark_aqua' => '§3',
+      'dark_blue' => '§1',
+      'blue' => '§1',
+      'light_purple' => '§d',
+      'dark_purple' => '§5',
+      'white' => '§f',
+      'gray' => '§7',
+      'dark_gray' => '§8',
+      'black' => '§0',
+      _ => '§0',
+    };
+  }
+
   Color mcNameToColor(String name) {
     return switch (name.toLowerCase()) {
       'dark_red' => const Color(0xffaa0000),

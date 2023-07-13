@@ -27,9 +27,8 @@ class SkywarsStatsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           FormattedUsername(
-            player: player,
             fontSize: 20,
-            prefix: ColorConverter().mcFormattingToTextSpan(stats.prefix),
+            text: '${stats.prefix} ${player.formattedUsername}',
           ),
           const SizedBox(
             width: double.infinity,

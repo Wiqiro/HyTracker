@@ -44,11 +44,10 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
         );
 
         if (context.mounted) {
-          if (context.mounted) Navigator.of(context).pop();
+          Navigator.of(context).pop();
           replace
               ? Navigator.of(context).pushNamed(StatsMenuScreen.routeName, arguments: newPlayer)
-              : Navigator.of(context)
-                  .popAndPushNamed(StatsMenuScreen.routeName, arguments: newPlayer);
+              : Navigator.of(context).popAndPushNamed(StatsMenuScreen.routeName, arguments: newPlayer);
         }
       }
     } catch (error) {
@@ -74,30 +73,24 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FormattedUsername(player: player, fontSize: 20),
+              FormattedUsername(text: player.formattedUsername, fontSize: 20),
               CustomSearchBar(
                 hint: 'Enter player name',
                 callback: (input) => _searchPlayerCallback(
                   input,
-                  (Provider.of<UserProvider>(context, listen: false)
-                          .player
-                          .username
-                          .toLowerCase() ==
-                      player.username.toLowerCase()),
+                  (Provider.of<UserProvider>(context, listen: false).player.username.toLowerCase() == player.username.toLowerCase()),
                 ),
               ),
               GamemodeCard(
                 title: 'Bedwars',
                 image: 'assets/images/bedwars.png',
-                callback: () => Navigator.of(context)
-                    .pushNamed(BedwarsStatsScreen.routeName, arguments: player),
+                callback: () => Navigator.of(context).pushNamed(BedwarsStatsScreen.routeName, arguments: player),
                 text: player.bedwarsStats.getSummarisedString,
               ),
               GamemodeCard(
                 title: 'Skywars',
                 image: 'assets/images/skywars.png',
-                callback: () => Navigator.of(context)
-                    .pushNamed(SkywarsStatsScreen.routeName, arguments: player),
+                callback: () => Navigator.of(context).pushNamed(SkywarsStatsScreen.routeName, arguments: player),
                 text: player.skywarsStats.getSummarisedString,
               ),
             ],

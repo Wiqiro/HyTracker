@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    Provider.of<UserProvider>(context, listen: false).getUserData().then((value) {
+    Provider.of<UserProvider>(context, listen: false).tryAutoLogin().then((value) {
       if (value) {
         Navigator.of(context).popAndPushNamed(
           StatsMenuScreen.routeName,
@@ -72,72 +72,70 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Welcome'),
       ),
-      body: Container(
-        child: Center(
-          child: !Provider.of<UserProvider>(context).isUuidSet
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: CustomSearchBar(
-                    hint: 'Minecraft username',
-                    callback: (input) => _uuidInputCallback(context, input),
-                  ),
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const ProfilePicture(),
-                    const SizedBox(height: 20),
-                    Provider.of<UserProvider>(context).isApiSet
-                        ? FormattedUsername(
-                            player: Provider.of<UserProvider>(context).player,
-                            fontSize: 26,
-                          )
-                        : Text(
-                            Provider.of<UserProvider>(context).username,
-                            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                          ),
-                    const SizedBox(height: 60),
-                    Provider.of<UserProvider>(context).isUuidSet
-                        ? EditButton(
-                            text: 'Change user',
-                            callback: () {},
-                          )
-                        : Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 40),
-                            child: CustomSearchBar(
-                              hint: 'Minecraft username',
-                              callback: (input) => _uuidInputCallback(context, input),
-                            ),
-                          ),
-                    const SizedBox(height: 20),
-                    Provider.of<UserProvider>(context).isApiSet
-                        ? EditButton(
-                            text: 'Edit API Key',
-                            callback: () {},
-                          )
-                        : Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-                            child: CustomSearchBar(
-                              hint: ' API Key',
-                              callback: (input) => _apiKeyInputCallback(context, Constants.apiKey),
-                            ),
-                          ),
-                    const SizedBox(height: 20),
-                    Provider.of<UserProvider>(context).isApiSet
-                        ? MainButton(
-                            text: 'Save',
-                            callback: () {
-                              Provider.of<UserProvider>(context, listen: false).saveUserData();
-                              Navigator.of(context).popAndPushNamed(
-                                StatsMenuScreen.routeName,
-                                arguments: Provider.of<UserProvider>(context, listen: false).player,
-                              );
-                            },
-                          )
-                        : const SizedBox(height: 60),
-                  ],
+      body: Center(
+        child: !Provider.of<UserProvider>(context).isUuidSet
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: CustomSearchBar(
+                  hint: 'Minecraft username',
+                  callback: (input) => _uuidInputCallback(context, input),
                 ),
-        ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const ProfilePicture(),
+                  const SizedBox(height: 20),
+                  Provider.of<UserProvider>(context).isApiSet
+                      ? FormattedUsername(
+                          text: Provider.of<UserProvider>(context).player.formattedUsername,
+                          fontSize: 26,
+                        )
+                      : Text(
+                          Provider.of<UserProvider>(context).username,
+                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                  const SizedBox(height: 60),
+                  Provider.of<UserProvider>(context).isUuidSet
+                      ? EditButton(
+                          text: 'Change user',
+                          callback: () {},
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          child: CustomSearchBar(
+                            hint: 'Minecraft username',
+                            callback: (input) => _uuidInputCallback(context, input),
+                          ),
+                        ),
+                  const SizedBox(height: 20),
+                  Provider.of<UserProvider>(context).isApiSet
+                      ? EditButton(
+                          text: 'Edit API Key',
+                          callback: () {},
+                        )
+                      : Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                          child: CustomSearchBar(
+                            hint: ' API Key',
+                            callback: (input) => _apiKeyInputCallback(context, Constants.apiKey),
+                          ),
+                        ),
+                  const SizedBox(height: 20),
+                  Provider.of<UserProvider>(context).isApiSet
+                      ? MainButton(
+                          text: 'Save',
+                          callback: () {
+                            Provider.of<UserProvider>(context, listen: false).saveUserData();
+                            Navigator.of(context).popAndPushNamed(
+                              StatsMenuScreen.routeName,
+                              arguments: Provider.of<UserProvider>(context, listen: false).player,
+                            );
+                          },
+                        )
+                      : const SizedBox(height: 60),
+                ],
+              ),
       ),
     );
   }
