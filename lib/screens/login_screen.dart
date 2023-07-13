@@ -55,7 +55,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(child: CircularProgressIndicator());
+        },
+      ),
+    );
     Provider.of<UserProvider>(context, listen: false).tryAutoLogin().then((value) {
+      Navigator.of(context).pop();
       if (value) {
         Navigator.of(context).popAndPushNamed(
           StatsMenuScreen.routeName,
