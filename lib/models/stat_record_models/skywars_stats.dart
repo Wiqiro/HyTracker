@@ -5,9 +5,10 @@ class SkywarsStats extends StatRecord {
   late final double level;
   late final String prefix;
 
+  late final int opals;
   late final int shards;
+  late final int angelOfDeath;
   late final int coins;
-  late final int lootChests;
 
   late final SkywarsModeStats overall;
   late final SkywarsModeStats soloNormal;
@@ -19,9 +20,10 @@ class SkywarsStats extends StatRecord {
     this.experience = 0,
     this.level = 1,
     this.prefix = '§7[1⋆]',
+    this.opals = 0,
     this.shards = 0,
+    this.angelOfDeath = 0,
     this.coins = 0,
-    this.lootChests = 0,
     this.overall = const SkywarsModeStats(),
     this.soloNormal = const SkywarsModeStats(),
     this.teamsNormal = const SkywarsModeStats(),
@@ -34,69 +36,17 @@ class SkywarsStats extends StatRecord {
     prefix = data.containsKey('selected_prestige_icon')
         ? _prefix(level.toInt(), data['selected_prestige_icon'])
         : _prefix(level.toInt(), '');
-
+    opals = data.containsKey('opals') ? data['opals'] : 0;
+    shards = data.containsKey('shard') ? data['shard'] : 0;
+    angelOfDeath = data.containsKey('angel_of_death_level') ? data['angel_of_death_level'] : 0;
+    coins = data.containsKey('coins') ? data['coins'] : 0;
     overall = SkywarsModeStats(
       kills: data.containsKey('kills') ? data['kills'] : 0,
       deaths: data.containsKey('deaths') ? data['deaths'] : 0,
-      kdRatio: 0,
       wins: data.containsKey('wins') ? data['wins'] : 0,
       losses: data.containsKey('losses') ? data['losses'] : 0,
-      wlRatio: data.containsKey('wins') && data.containsKey('losses') && data['losses'] != 0
-          ? data['wins'] / data['losses']
-          : double.nan,
     );
   }
-
-/*   String _prestigeIcon(String iconName) {
-    return switch (iconName) {
-      'default' => '⋆',
-      'angel_1' => '★',
-      'angel_2' => '☆',
-      'angel_3' => '⁕',
-      'angel_4' => '✶',
-      'angel_5' => '✳',
-      'angel_6' => '✴',
-      'angel_7' => '✷',
-      'angel_8' => '❋',
-      'angel_9' => '✼',
-      'angel_10' => '❂',
-      'angel_11' => '❁',
-      'angel_12' => '☬',
-      'iron_prestige' => '✙',
-      'gold_prestige' => '❤',
-      'diamond_prestige' => '☠',
-      'emerald_prestige' => '✦',
-      'sapphire_prestige' => '✌',
-      'ruby_prestige' => '❦',
-      'crystal_prestige' => '✵',
-      'opal_prestige' => '❣',
-      'amethyst_prestige' => '☯',
-      'rainbow_prestige' => '✺',
-      'first_class_prestige' => '★',
-      'assassin_prestige' => '★',
-      'veteran_prestige' => '★',
-      'god_like_prestige' => '★',
-      'warrior_prestige' => '★',
-      'captain_prestige' => '★',
-      'soldier_prestige' => '★',
-      'infantry_prestige' => '★',
-      'sergeant_prestige' => '★',
-      'lieutenant_prestige' => '★',
-      'admiral_prestige' => '★',
-      'general_prestige' => '★',
-      'villain_prestige' => '★',
-      'skilled_prestige' => '★',
-      'sneaky_prestige' => '★',
-      'overlord_prestige' => '★',
-      'war_chief_prestige' => '★',
-      'warlock_prestige' => '★',
-      'emperor_prestige' => '★',
-      'mythic_prestige' => 'ಠ_ಠ',
-      'favor_icon' => '⚔​',
-      'omega_icon' => 'Ω​',
-      _ => '⋆'
-    };
-  } */
 
   String _prefix(int level, String iconName) {
     var lvlStr = level.toString();
@@ -187,14 +137,6 @@ class SkywarsStats extends StatRecord {
     };
   }
 
-  @override
-  String get getSummarisedString {
-    return '''
-Level: $level
-Wins: ${overall.wins}
-Losses: ${overall.losses}''';
-  }
-
   double _level(int exp) {
     return switch (exp) {
       < 20 => 1 + (exp / 20),
@@ -216,18 +158,22 @@ Losses: ${overall.losses}''';
 class SkywarsModeStats {
   final int kills;
   final int deaths;
-  final double kdRatio;
 
   final int wins;
   final int losses;
-  final double wlRatio;
 
   const SkywarsModeStats({
     this.kills = 0,
     this.deaths = 0,
-    this.kdRatio = 0,
     this.wins = 0,
     this.losses = 0,
-    this.wlRatio = 0,
   });
+
+  double get kdRatio {
+    return kills / deaths;
+  }
+
+  double get wlRatio {
+    return wins / losses;
+  }
 }

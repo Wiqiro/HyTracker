@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/models/player.dart';
 
-import '../../utils/color_converter.dart';
 import '../../widgets/formatted_username.dart';
 import '../../widgets/profile_options.dart';
 
@@ -14,7 +13,6 @@ class SkywarsStatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final player = ModalRoute.of(context)!.settings.arguments as Player;
     final stats = player.skywarsStats;
-    //print(stats.getFormattedPrefix);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Player stats'),

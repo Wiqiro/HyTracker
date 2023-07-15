@@ -22,7 +22,16 @@ class FormattedUsername extends StatelessWidget {
             Shadow(offset: Offset(0.5, 0.5), blurRadius: 2, color: Color(0x55000000)),
           ],
         ),
-        children: [ColorConverter().mcFormattingToTextSpan(text)],
+        children: RegExp(r'§[0-9a-f](?:(?!§[0-9a-f]).)+').allMatches(text).map((e) {
+          var match = e.group(0);
+          return TextSpan(
+            text: match?.replaceAll(RegExp(r'§.'), ''),
+            //TODO: maybe nest to handle other styles
+            style: TextStyle(
+              color: ColorConverter().mcCodeToColor(match!.substring(0, 2)),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

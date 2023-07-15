@@ -26,34 +26,48 @@ class Player {
 
   String _formattedUsername(Map<String, dynamic> data) {
     if (data['player'].containsKey('prefix')) {
-      return switch (data['player']['prefix']) {
-        '§d[PIG§b+++§d]' => '§d[PIG§b+++§d] $username',
-        '§c[OWNER]' => '§c[OWNER] $username',
-        '§6[MOJANG]' => '§6[MOJANG] $username',
-        '§6[EVENTS]' => '§6[EVENTS] $username',
-        _ => '§7$username',
-      };
-    } else if (data['player'].containsKey('rank')) {
-      return switch (data['player']['rank']) {
-        'GAME_MASTER' => '§2[GM] $username',
-        'ADMIN' => '§c[ADMIN] $username',
-        'YOUTUBER' => '§c[§fYOUTUBE§c] $username',
-        _ => '§7$username',
-      };
-    } else if (data['player'].containsKey('newPackageRank')) {
-      return switch (data['player']['newPackageRank']) {
-        'VIP' => '§a[VIP] $username',
-        'VIP_PLUS' => '§a[VIP§6+§a] $username',
-        'MVP' => '§b[MVP] $username',
-        'MVP_PLUS' => (data['player'].containsKey('monthlyPackageRank') && data['player']['monthlyPackageRank'] == 'SUPERSTAR')
-            ? (data['player'].containsKey('monthlyRankColor') && data['player']['monthlyRankColor'] == 'AQUA'
-                ? '§b[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}++§b] $username'
-                : '§6[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}++§6] $username')
-            : '§b[MVP${ColorConverter().colorNameToCode(data['player']['rankPlusColor'])}+§b] $username',
-        _ => '§7$username',
-      };
-    } else {
-      return '§7$username';
+      switch (data['player']['prefix']) {
+        case '§d[PIG§b+++§d]':
+          return '§d[PIG§b+++§d] $username';
+        case '§c[OWNER]':
+          return '§c[OWNER] $username';
+        case '§6[MOJANG]':
+          return '§6[MOJANG] $username';
+        case '§6[EVENTS]':
+          return '§6[EVENTS] $username';
+      }
     }
+    if (data['player'].containsKey('rank')) {
+      switch (data['player']['rank']) {
+        case 'GAME_MASTER':
+          return '§2[GM] $username';
+        case 'ADMIN':
+          return '§c[ADMIN] $username';
+        case 'YOUTUBER':
+          return '§c[§fYOUTUBE§c] $username';
+      }
+    }
+    if (data['player'].containsKey('newPackageRank')) {
+      switch (data['player']['newPackageRank']) {
+        case 'VIP':
+          return '§a[VIP] $username';
+        case 'VIP_PLUS':
+          return '§a[VIP§6+§a] $username';
+        case 'MVP':
+          return '§b[MVP] $username';
+        case 'MVP_PLUS':
+          var plusColor =
+              data['player'].containsKey('rankPlusColor') ? ColorConverter().colorNameToCode(data['player']['rankPlusColor']) : '§c';
+
+          if (data['player'].containsKey('monthlyPackageRank') && data['player']['monthlyPackageRank'] == 'SUPERSTAR') {
+            return data['player'].containsKey('monthlyRankColor') && data['player']['monthlyRankColor'] == 'AQUA'
+                ? '§b[MVP$plusColor++§b] $username'
+                : '§6[MVP$plusColor++§6] $username';
+          } else {
+            return '§b[MVP$plusColor+§b] $username';
+          }
+      }
+    }
+    return '§7$username';
   }
 }

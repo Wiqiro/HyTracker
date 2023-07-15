@@ -30,8 +30,8 @@ class HttpRequests {
 
   Future<Uint8List> getUserAvatar(String uuid) async {
     try {
-      //final url = 'https://crafatar.com/avatars/$uuid?size=8&default=MHF_Steve&overlay';
-      final url = 'https://minotar.net/helm/$uuid';
+      final url = 'https://crafatar.com/avatars/$uuid?size=8&overlay';
+      //final url = 'https://minotar.net/helm/$uuid';
       final data = await http.get(Uri.parse(url));
       //TODO: handle error responses
       return data.bodyBytes;

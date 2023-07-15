@@ -78,25 +78,35 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
                 hint: 'Enter player name',
                 callback: (input) => _searchPlayerCallback(
                   input,
-                  (Provider.of<UserProvider>(context, listen: false).player.username.toLowerCase() == player.username.toLowerCase()),
+                  (Provider.of<UserProvider>(context, listen: false).player.username.toLowerCase() ==
+                      player.username.toLowerCase()),
                 ),
               ),
               GamemodeCard(
                 title: 'Bedwars',
                 image: 'assets/images/bedwars.png',
                 callback: () => Navigator.of(context).pushNamed(BedwarsStatsScreen.routeName, arguments: player),
-                text: player.bedwarsStats.getSummarisedString,
+                text: '''
+Level: ${player.bedwarsStats.level}
+Wins: ${player.bedwarsStats.overall.wins}
+Losses: ${player.bedwarsStats.overall.losses}
+Final kills: ${player.bedwarsStats.overall.finalKills}
+Beds broken: ${player.bedwarsStats.overall.bedsBroken}''',
               ),
               GamemodeCard(
                 title: 'Skywars',
                 image: 'assets/images/skywars.png',
                 callback: () => Navigator.of(context).pushNamed(SkywarsStatsScreen.routeName, arguments: player),
-                text: player.skywarsStats.getSummarisedString,
+                text: '''
+Level: ${player.skywarsStats.level}
+Wins: ${player.skywarsStats.overall.wins}
+Losses: ${player.skywarsStats.overall.losses}''',
               ),
             ],
           ),
         ),
       ),
+      drawer: Bott,
     );
   }
 }

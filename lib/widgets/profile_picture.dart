@@ -16,7 +16,7 @@ class ProfilePicture extends StatelessWidget {
       width: 120,
       height: 120,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(14),
         child: Image.memory(
           Provider.of<UserProvider>(context).avatar!,
           scale: 0.01,

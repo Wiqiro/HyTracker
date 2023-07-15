@@ -3,8 +3,7 @@ import 'package:hytracker/models/stat_record.dart';
 class BedwarsStats extends StatRecord {
   late final double level;
   late final int experience;
-  late final double coins;
-  late final int lootChests;
+  late final int coins;
 
   late final BedwarsModeStats overall;
   late final BedwarsModeStats solo;
@@ -16,7 +15,6 @@ class BedwarsStats extends StatRecord {
     this.level = 1,
     this.experience = 500,
     this.coins = 0,
-    this.lootChests = 0,
     this.overall = const BedwarsModeStats(),
     this.solo = const BedwarsModeStats(),
     this.doubles = const BedwarsModeStats(),
@@ -25,27 +23,65 @@ class BedwarsStats extends StatRecord {
   });
 
   BedwarsStats.fromRawData(Map<String, dynamic> data) {
-    experience = data['Experience'].toInt();
+    experience = data.containsKey('Experience') ? data['Experience'].toInt() : 0;
     level = _level(experience);
+    coins = data.containsKey('coins') ? data['coins'] : 0;
 
     overall = BedwarsModeStats(
-      kills: data['kills_bedwars'],
+      kills: data.containsKey('kills_bedwars') ? data['kills_bedwars'] : 0,
+      deaths: data.containsKey('deaths_bedwars') ? data['deaths_bedwars'] : 0,
+      finalKills: data.containsKey('final_kills_bedwars') ? data['final_kills_bedwars'] : 0,
+      finalDeaths: data.containsKey('final_deaths_bedwars') ? data['final_deaths_bedwars'] : 0,
+      wins: data.containsKey('wins_bedwars') ? data['wins_bedwars'] : 0,
+      losses: data.containsKey('losses_bedwars') ? data['losses_bedwars'] : 0,
+      bedsBroken: data.containsKey('beds_broken_bedwars') ? data['beds_broken_bedwars'] : 0,
+      bedsLost: data.containsKey('beds_lost_bedwars') ? data['beds_lost_bedwars'] : 0,
+    );
+    solo = BedwarsModeStats(
+      kills: data.containsKey('eight_one_kills_bedwars') ? data['eight_one_kills_bedwars'] : 0,
+      deaths: data.containsKey('eight_one_deaths_bedwars') ? data['eight_one_deaths_bedwars'] : 0,
+      finalKills: data.containsKey('eight_one_final_kills_bedwars') ? data['eight_one_final_kills_bedwars'] : 0,
+      finalDeaths: data.containsKey('eight_one_final_deaths_bedwars') ? data['eight_one_final_deaths_bedwars'] : 0,
+      wins: data.containsKey('eight_one_wins_bedwars') ? data['eight_one_wins_bedwars'] : 0,
+      losses: data.containsKey('eight_one_losses_bedwars') ? data['eight_one_losses_bedwars'] : 0,
+      bedsBroken: data.containsKey('eight_one_beds_broken_bedwars') ? data['eight_one_beds_broken_bedwars'] : 0,
+      bedsLost: data.containsKey('eight_one_beds_lost_bedwars') ? data['eight_one_beds_lost_bedwars'] : 0,
+    );
+    doubles = BedwarsModeStats(
+      kills: data.containsKey('eight_two_kills_bedwars') ? data['eight_two_kills_bedwars'] : 0,
+      deaths: data.containsKey('eight_two_deaths_bedwars') ? data['eight_two_deaths_bedwars'] : 0,
+      finalKills: data.containsKey('eight_two_final_kills_bedwars') ? data['eight_two_final_kills_bedwars'] : 0,
+      finalDeaths: data.containsKey('eight_two_final_deaths_bedwars') ? data['eight_two_final_deaths_bedwars'] : 0,
+      wins: data.containsKey('eight_two_wins_bedwars') ? data['eight_two_wins_bedwars'] : 0,
+      losses: data.containsKey('eight_two_losses_bedwars') ? data['eight_two_losses_bedwars'] : 0,
+      bedsBroken: data.containsKey('eight_two_beds_broken_bedwars') ? data['eight_two_beds_broken_bedwars'] : 0,
+      bedsLost: data.containsKey('eight_two_beds_lost_bedwars') ? data['eight_two_beds_lost_bedwars'] : 0,
+    );
+    threes = BedwarsModeStats(
+      kills: data.containsKey('four_three_kills_bedwars') ? data['four_three_kills_bedwars'] : 0,
+      deaths: data.containsKey('four_three_deaths_bedwars') ? data['four_three_deaths_bedwars'] : 0,
+      finalKills: data.containsKey('four_three_final_kills_bedwars') ? data['four_three_final_kills_bedwars'] : 0,
+      finalDeaths: data.containsKey('four_three_final_deaths_bedwars') ? data['four_three_final_deaths_bedwars'] : 0,
+      wins: data.containsKey('four_three_wins_bedwars') ? data['four_three_wins_bedwars'] : 0,
+      losses: data.containsKey('four_three_losses_bedwars') ? data['four_three_losses_bedwars'] : 0,
+      bedsBroken: data.containsKey('four_three_beds_broken_bedwars') ? data['four_three_beds_broken_bedwars'] : 0,
+      bedsLost: data.containsKey('four_three_beds_lost_bedwars') ? data['four_three_beds_lost_bedwars'] : 0,
+    );
+    fours = BedwarsModeStats(
+      kills: data.containsKey('four_four_kills_bedwars') ? data['four_four_kills_bedwars'] : 0,
+      deaths: data.containsKey('four_four_deaths_bedwars') ? data['four_four_deaths_bedwars'] : 0,
+      finalKills: data.containsKey('four_four_final_kills_bedwars') ? data['four_four_final_kills_bedwars'] : 0,
+      finalDeaths: data.containsKey('four_four_final_deaths_bedwars') ? data['four_four_final_deaths_bedwars'] : 0,
+      wins: data.containsKey('four_four_wins_bedwars') ? data['four_four_wins_bedwars'] : 0,
+      losses: data.containsKey('four_four_losses_bedwars') ? data['four_four_losses_bedwars'] : 0,
+      bedsBroken: data.containsKey('four_four_beds_broken_bedwars') ? data['four_four_beds_broken_bedwars'] : 0,
+      bedsLost: data.containsKey('four_four_beds_lost_bedwars') ? data['four_four_beds_lost_bedwars'] : 0,
     );
   }
 
-  @override
-  String get getSummarisedString {
-    return '''
-Level: $level
-Wins: ${overall.wins}
-Losses: ${overall.losses}
-Final kills: ${overall.finalKills}
-Beds broken: ${overall.bedsBroken}''';
-  }
-
   double _level(int exp) {
-    double expAbovePrestige = exp - ((exp / 487000).floor() * 487000);
-    double prestigeLevel = (exp / 487000).floor() * 100;
+    int expAbovePrestige = exp - ((exp / 487000).floor() * 487000);
+    int prestigeLevel = (exp / 487000).floor() * 100;
 
     return switch (expAbovePrestige) {
       >= 7000 => prestigeLevel + 4 + (expAbovePrestige - 7000) / 5000,
@@ -99,34 +135,42 @@ Beds broken: ${overall.bedsBroken}''';
 class BedwarsModeStats {
   final int kills;
   final int deaths;
-  final double kdRatio;
 
   final int finalKills;
   final int finalDeaths;
-  final double fkdRatio;
 
   final int wins;
   final int losses;
-  final double wlRatio;
   final int winstreak;
 
   final int bedsBroken;
   final int bedsLost;
-  final double bblRatio;
 
   const BedwarsModeStats({
     this.kills = 0,
     this.deaths = 0,
-    this.kdRatio = 0,
     this.finalKills = 0,
     this.finalDeaths = 0,
-    this.fkdRatio = 0,
     this.wins = 0,
     this.losses = 0,
-    this.wlRatio = 0,
     this.winstreak = 0,
     this.bedsBroken = 0,
     this.bedsLost = 0,
-    this.bblRatio = 0,
   });
+
+  double get kdRatio {
+    return kills / deaths;
+  }
+
+  double get fkdRatio {
+    return finalKills / finalDeaths;
+  }
+
+  double get wlRatio {
+    return wins / losses;
+  }
+
+  double get bblRatio {
+    return bedsBroken / bedsLost;
+  }
 }
