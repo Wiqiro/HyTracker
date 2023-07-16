@@ -6,11 +6,9 @@ import 'package:hytracker/widgets/formatted_username.dart';
 import '../../widgets/profile_options.dart';
 
 class BedwarsStatsScreen extends StatefulWidget {
-  static const routeName = '/player.bedwarsStats-screens/bedwars';
-
   final Player player;
 
-  const BedwarsStatsScreen({required this.player, super.key});
+  const BedwarsStatsScreen(this.player, {super.key});
 
   @override
   State<BedwarsStatsScreen> createState() => _BedwarsStatsScreenState();
@@ -21,7 +19,7 @@ class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
   late String selectedModeName;
   late BedwarsModeStats selectedMode;
 
-  void setMode() {
+  void _setMode() {
     setState(() {
       switch (selectedModeIndex) {
         case 0:
@@ -45,7 +43,7 @@ class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    setMode();
+    _setMode();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Player stats'),

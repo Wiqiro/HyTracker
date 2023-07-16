@@ -38,6 +38,9 @@ flutter:
     - assets/images/edit.png
     - assets/images/bedwars.png
     - assets/images/skywars.png
+    - assets/images/profile.png
+    - assets/images/tracker.png
+    - assets/images/history.png
 
   fonts: 
       - family: Minecraftia

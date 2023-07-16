@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hytracker/screens/stats_menu_screen.dart';
+import 'package:hytracker/screens/navigation_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -11,8 +11,6 @@ import '../widgets/search_bar.dart';
 import '../widgets/profile_picture.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = '/login-screen';
-
   const LoginScreen({super.key});
 
   @override
@@ -66,9 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
     Provider.of<UserProvider>(context, listen: false).tryAutoLogin().then((value) {
       Navigator.of(context).pop();
       if (value) {
-        Navigator.of(context).popAndPushNamed(
-          StatsMenuScreen.routeName,
-          arguments: Provider.of<UserProvider>(context, listen: false).player,
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const NavigationScreen(),
+          ),
         );
       }
     });
@@ -136,9 +135,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: 'Save',
                           callback: () {
                             Provider.of<UserProvider>(context, listen: false).saveUserData();
-                            Navigator.of(context).popAndPushNamed(
-                              StatsMenuScreen.routeName,
-                              arguments: Provider.of<UserProvider>(context, listen: false).player,
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const NavigationScreen(),
+                              ),
                             );
                           },
                         )

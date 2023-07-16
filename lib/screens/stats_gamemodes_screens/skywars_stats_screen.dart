@@ -5,14 +5,12 @@ import '../../widgets/formatted_username.dart';
 import '../../widgets/profile_options.dart';
 
 class SkywarsStatsScreen extends StatelessWidget {
-  static const routeName = '/stats-screens/skywars';
+  final Player player;
 
-  const SkywarsStatsScreen({super.key});
+  const SkywarsStatsScreen(this.player, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final player = ModalRoute.of(context)!.settings.arguments as Player;
-    final stats = player.skywarsStats;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Player stats'),
@@ -26,7 +24,7 @@ class SkywarsStatsScreen extends StatelessWidget {
         children: [
           FormattedUsername(
             fontSize: 20,
-            text: '${stats.prefix} ${player.formattedUsername}',
+            text: '${player.skywarsStats.prefix} ${player.formattedUsername}',
           ),
           const SizedBox(
             width: double.infinity,

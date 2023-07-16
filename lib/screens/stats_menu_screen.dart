@@ -12,16 +12,16 @@ import '../widgets/gamemode_card.dart';
 import '../widgets/profile_options.dart';
 
 class StatsMenuScreen extends StatefulWidget {
-  static const String routeName = '/stats-screen';
+  final Player player;
 
-  const StatsMenuScreen({super.key});
+  const StatsMenuScreen({required this.player, super.key});
 
   @override
   State<StatsMenuScreen> createState() => _StatsMenuScreenState();
 }
 
 class _StatsMenuScreenState extends State<StatsMenuScreen> {
-  Future<void> _searchPlayerCallback(String input, bool replace) async {
+  Future<void> _searchPlayerCallback(String input) async {
     showDialog(
       context: context,
       builder: (context) {
@@ -30,35 +30,42 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
     );
 
     try {
-      var newPlayerUuidData = await HttpRequests().getUuidFromUsername(input);
-      var newPlayerUuid = newPlayerUuidData['id'];
+      Map<String, dynamic> newPlayerUuidData = await HttpRequests().getUuidFromUsername(input);
 
-      if (context.mounted) {
-        var newPlayerData = await HttpRequests().getHypixelPlayerData(
-          Provider.of<UserProvider>(context, listen: false).apiKey,
-          newPlayerUuid,
-        );
-        Player newPlayer = Player.fromRawData(
-          username: newPlayerUuidData['name'],
-          data: newPlayerData,
-        );
+      if (!mounted) return;
 
-        if (context.mounted) {
-          Navigator.of(context).pop();
-          replace
-              ? Navigator.of(context).pushNamed(StatsMenuScreen.routeName, arguments: newPlayer)
-              : Navigator.of(context).popAndPushNamed(StatsMenuScreen.routeName, arguments: newPlayer);
-        }
+      Map<String, dynamic> newPlayerData = await HttpRequests().getHypixelPlayerData(
+        Provider.of<UserProvider>(context, listen: false).apiKey,
+        newPlayerUuidData['id'],
+      );
+
+      Player newPlayer = Player.fromRawData(
+        username: newPlayerUuidData['name'],
+        data: newPlayerData,
+      );
+
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+      String loggedUsername = Provider.of<UserProvider>(context, listen: false).player.username;
+      MaterialPageRoute<dynamic> route = MaterialPageRoute(
+        builder: (context) => StatsMenuScreen(player: newPlayer),
+      );
+
+      if (loggedUsername.toLowerCase() == widget.player.username.toLowerCase() &&
+          input.toLowerCase() != widget.player.username.toLowerCase() &&
+          input.toLowerCase() != loggedUsername.toLowerCase()) {
+        Navigator.of(context).push(route);
+      } else {
+        Navigator.of(context).pushReplacement(route);
       }
     } catch (error) {
-      if (context.mounted) Navigator.of(context).pop();
+      if (mounted) Navigator.of(context).pop();
       rethrow;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Player player = ModalRoute.of(context)?.settings.arguments as Player;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Player stats'),
@@ -73,40 +80,47 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FormattedUsername(text: player.formattedUsername, fontSize: 20),
+              FormattedUsername(text: widget.player.formattedUsername, fontSize: 20),
               CustomSearchBar(
                 hint: 'Enter player name',
-                callback: (input) => _searchPlayerCallback(
-                  input,
-                  (Provider.of<UserProvider>(context, listen: false).player.username.toLowerCase() ==
-                      player.username.toLowerCase()),
-                ),
+                callback: (input) => _searchPlayerCallback(input),
               ),
               GamemodeCard(
                 title: 'Bedwars',
                 image: 'assets/images/bedwars.png',
-                callback: () => Navigator.of(context).pushNamed(BedwarsStatsScreen.routeName, arguments: player),
+                callback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => BedwarsStatsScreen(widget.player),
+                    ),
+                  );
+                },
                 text: '''
-Level: ${player.bedwarsStats.level}
-Wins: ${player.bedwarsStats.overall.wins}
-Losses: ${player.bedwarsStats.overall.losses}
-Final kills: ${player.bedwarsStats.overall.finalKills}
-Beds broken: ${player.bedwarsStats.overall.bedsBroken}''',
+Level: ${widget.player.bedwarsStats.level}
+Wins: ${widget.player.bedwarsStats.overall.wins}
+Losses: ${widget.player.bedwarsStats.overall.losses}
+Final kills: ${widget.player.bedwarsStats.overall.finalKills}
+Beds broken: ${widget.player.bedwarsStats.overall.bedsBroken}''',
               ),
               GamemodeCard(
                 title: 'Skywars',
                 image: 'assets/images/skywars.png',
-                callback: () => Navigator.of(context).pushNamed(SkywarsStatsScreen.routeName, arguments: player),
+                callback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SkywarsStatsScreen(widget.player),
+                    ),
+                  );
+                },
                 text: '''
-Level: ${player.skywarsStats.level}
-Wins: ${player.skywarsStats.overall.wins}
-Losses: ${player.skywarsStats.overall.losses}''',
+Level: ${widget.player.skywarsStats.level}
+Wins: ${widget.player.skywarsStats.overall.wins}
+Losses: ${widget.player.skywarsStats.overall.losses}''',
               ),
             ],
           ),
         ),
       ),
-      drawer: Bott,
     );
   }
 }

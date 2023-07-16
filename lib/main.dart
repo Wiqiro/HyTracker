@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/providers/user.dart';
 import 'package:hytracker/screens/login_screen.dart';
-import 'package:hytracker/screens/stats_gamemodes_screens/bedwars_stats_screen.dart';
-import 'package:hytracker/screens/stats_gamemodes_screens/skywars_stats_screen.dart';
-import 'package:hytracker/screens/stats_menu_screen.dart';
 import 'package:provider/provider.dart';
-
-import 'models/player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,24 +47,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
           home: const LoginScreen(),
-          routes: {
-            LoginScreen.routeName: (context) => const LoginScreen(),
-            StatsMenuScreen.routeName: (context) => const StatsMenuScreen(),
-            //BedwarsStatsScreen.routeName: (context) => const BedwarsStatsScreen(),
-            SkywarsStatsScreen.routeName: (context) => const SkywarsStatsScreen()
-          },
-          onGenerateRoute: (settings) {
-            switch (settings.name) {
-              case BedwarsStatsScreen.routeName:
-                return MaterialPageRoute(
-                  builder: (context) {
-                    return BedwarsStatsScreen(player: settings.arguments as Player);
-                  },
-                );
-              default:
-                return null;
-            }
-          },
         ),
       ),
     );

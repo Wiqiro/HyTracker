@@ -12,7 +12,11 @@ class ProfileOptions extends StatelessWidget {
     return InkWell(
       onTap: () {
         Provider.of<UserProvider>(context, listen: false).logout();
-        Navigator.of(context).popAndPushNamed(LoginScreen.routeName);
+        Navigator.of(context, rootNavigator: true).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+        );
       },
       child: Container(
         decoration: BoxDecoration(
