@@ -41,6 +41,7 @@ flutter:
     - assets/images/profile.png
     - assets/images/tracker.png
     - assets/images/history.png
+    - assets/images/duels.png
 
   fonts: 
       - family: Minecraftia

@@ -1,4 +1,5 @@
 import 'package:hytracker/models/stat_record_models/bedwars_stats.dart';
+import 'package:hytracker/models/stat_record_models/duels_stats.dart';
 import 'package:hytracker/models/stat_record_models/skywars_stats.dart';
 import 'package:hytracker/utils/color_converter.dart';
 
@@ -17,11 +18,13 @@ class Player {
 
   late final BedwarsStats bedwarsStats;
   late final SkywarsStats skywarsStats;
+  late final DuelsStats duelsStats;
 
   Player.fromRawData({required this.username, required Map<String, dynamic> data}) {
     formattedUsername = _formattedUsername(data);
     bedwarsStats = BedwarsStats.fromRawData(data['player']['stats']['Bedwars']);
     skywarsStats = SkywarsStats.fromRawData(data['player']['stats']['SkyWars']);
+    duelsStats = DuelsStats.fromRawData(data['player']['stats']['Duels']);
   }
 
   String _formattedUsername(Map<String, dynamic> data) {
@@ -56,8 +59,9 @@ class Player {
         case 'MVP':
           return '§b[MVP] $username';
         case 'MVP_PLUS':
-          var plusColor =
-              data['player'].containsKey('rankPlusColor') ? ColorConverter().colorNameToCode(data['player']['rankPlusColor']) : '§c';
+          var plusColor = data['player'].containsKey('rankPlusColor')
+              ? ColorConverter().colorNameToCode(data['player']['rankPlusColor'])
+              : '§c';
 
           if (data['player'].containsKey('monthlyPackageRank') && data['player']['monthlyPackageRank'] == 'SUPERSTAR') {
             return data['player'].containsKey('monthlyRankColor') && data['player']['monthlyRankColor'] == 'AQUA'

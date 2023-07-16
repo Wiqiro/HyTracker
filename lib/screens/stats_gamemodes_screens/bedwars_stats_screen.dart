@@ -46,7 +46,7 @@ class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
     _setMode();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Player stats'),
+        title: const Text('Bedwars stats'),
         actions: const [
           ProfileOptions(),
           SizedBox(width: 15),

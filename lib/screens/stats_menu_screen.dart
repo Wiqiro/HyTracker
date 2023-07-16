@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/providers/user.dart';
+import 'package:hytracker/screens/stats_gamemodes_screens/duels_stats_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'stats_gamemodes_screens/bedwars_stats_screen.dart';
@@ -14,7 +15,7 @@ import '../widgets/profile_options.dart';
 class StatsMenuScreen extends StatefulWidget {
   final Player player;
 
-  const StatsMenuScreen({required this.player, super.key});
+  const StatsMenuScreen(this.player, {super.key});
 
   @override
   State<StatsMenuScreen> createState() => _StatsMenuScreenState();
@@ -48,7 +49,7 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
       Navigator.of(context, rootNavigator: true).pop();
       String loggedUsername = Provider.of<UserProvider>(context, listen: false).player.username;
       MaterialPageRoute<dynamic> route = MaterialPageRoute(
-        builder: (context) => StatsMenuScreen(player: newPlayer),
+        builder: (context) => StatsMenuScreen(newPlayer),
       );
 
       if (loggedUsername.toLowerCase() == widget.player.username.toLowerCase() &&
@@ -109,6 +110,21 @@ Beds broken: ${widget.player.bedwarsStats.overall.bedsBroken}''',
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => SkywarsStatsScreen(widget.player),
+                    ),
+                  );
+                },
+                text: '''
+Level: ${widget.player.skywarsStats.level}
+Wins: ${widget.player.skywarsStats.overall.wins}
+Losses: ${widget.player.skywarsStats.overall.losses}''',
+              ),
+              GamemodeCard(
+                title: 'Duels',
+                image: 'assets/images/duels.png',
+                callback: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DuelsStatsScreen(widget.player),
                     ),
                   );
                 },

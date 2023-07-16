@@ -42,9 +42,7 @@ class _TabsScreenState extends State<NavigationScreen> {
             Navigator(
               key: _keys[0],
               onGenerateRoute: (route) => MaterialPageRoute(
-                builder: (context) => StatsMenuScreen(
-                  player: Provider.of<UserProvider>(context).player,
-                ),
+                builder: (context) => StatsMenuScreen(Provider.of<UserProvider>(context).player),
                 settings: route,
               ),
             ),
@@ -65,6 +63,7 @@ class _TabsScreenState extends State<NavigationScreen> {
           ],
         ),
       ),
+      extendBody: true,
       bottomNavigationBar: Container(
         margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 30),

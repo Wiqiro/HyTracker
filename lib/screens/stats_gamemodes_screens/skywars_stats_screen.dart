@@ -13,7 +13,7 @@ class SkywarsStatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Player stats'),
+        title: const Text('Skywars stats'),
         actions: const [
           ProfileOptions(),
           SizedBox(width: 15),
