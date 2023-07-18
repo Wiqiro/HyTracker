@@ -7,7 +7,7 @@ import 'stats_gamemodes_screens/bedwars_stats_screen.dart';
 import 'stats_gamemodes_screens/skywars_stats_screen.dart';
 import '../models/player.dart';
 import '../utils/hypixel_api_wrapper.dart';
-import '../widgets/formatted_username.dart';
+import '../widgets/minecraft_text.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/gamemode_card.dart';
 import '../widgets/profile_options.dart';
@@ -81,7 +81,7 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FormattedUsername(text: widget.player.formattedUsername, fontSize: 20),
+              MinecraftText(widget.player.formattedUsername, fontSize: 20, fontFamily: 'Minecraftia'),
               CustomSearchBar(
                 hint: 'Enter player name',
                 callback: (input) => _searchPlayerCallback(input),

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/user.dart';
 import '../utils/constants.dart';
 import '../widgets/edit_button.dart';
-import '../widgets/formatted_username.dart';
+import '../widgets/minecraft_text.dart';
 import '../widgets/main_button.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/profile_picture.dart';
@@ -95,9 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const ProfilePicture(),
                   const SizedBox(height: 20),
                   Provider.of<UserProvider>(context).isApiSet
-                      ? FormattedUsername(
-                          text: Provider.of<UserProvider>(context).player.formattedUsername,
+                      ? MinecraftText(
+                          Provider.of<UserProvider>(context).player.formattedUsername,
                           fontSize: 26,
+                          fontFamily: 'Minecraftia',
                         )
                       : Text(
                           Provider.of<UserProvider>(context).username,

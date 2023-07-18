@@ -1,49 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/models/player.dart';
-import 'package:hytracker/models/stat_record_models/bedwars_stats.dart';
-import 'package:hytracker/widgets/formatted_username.dart';
+import 'package:hytracker/widgets/minecraft_text.dart';
+import 'package:hytracker/widgets/stats_table.dart';
 
 import '../../widgets/profile_options.dart';
 
-class BedwarsStatsScreen extends StatefulWidget {
+class BedwarsStatsScreen extends StatelessWidget {
   final Player player;
 
   const BedwarsStatsScreen(this.player, {super.key});
 
   @override
-  State<BedwarsStatsScreen> createState() => _BedwarsStatsScreenState();
-}
-
-class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
-  var selectedModeIndex = 0;
-  late String selectedModeName;
-  late BedwarsModeStats selectedMode;
-
-  void _setMode() {
-    setState(() {
-      switch (selectedModeIndex) {
-        case 0:
-          selectedMode = widget.player.bedwarsStats.solo;
-          selectedModeName = 'Solo';
-        case 1:
-          selectedMode = widget.player.bedwarsStats.doubles;
-          selectedModeName = 'Doubles';
-        case 2:
-          selectedMode = widget.player.bedwarsStats.threes;
-          selectedModeName = '3v3v3v3';
-        case 3:
-          selectedMode = widget.player.bedwarsStats.fours;
-          selectedModeName = '4v4v4v4';
-        default:
-          selectedMode = widget.player.bedwarsStats.solo;
-          selectedModeName = 'Solo';
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    _setMode();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Bedwars stats'),
@@ -55,9 +23,10 @@ class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          FormattedUsername(
+          MinecraftText(
+            '${player.bedwarsStats.prefix} ${player.formattedUsername}',
             fontSize: 20,
-            text: '${widget.player.bedwarsStats.prefix} ${widget.player.formattedUsername}',
+            fontFamily: 'Minecraftia',
           ),
           const SizedBox(
             width: double.infinity,
@@ -66,149 +35,107 @@ class _BedwarsStatsScreenState extends State<BedwarsStatsScreen> {
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(20),
-            child: DataTable(
-              dividerThickness: 0.1,
-              dataRowMinHeight: 20,
-              dataRowMaxHeight: 30,
-              headingRowHeight: 50,
-              columnSpacing: 30,
-              border: TableBorder.symmetric(inside: BorderSide.none),
-              columns: [
-                const DataColumn(
-                  label: Text(''),
-                ),
-                const DataColumn(label: Text('Overall')),
-                DataColumn(
-                  label: Row(
-                    children: [
-                      SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_back_ios_rounded,
-                            size: 15,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              selectedModeIndex = (selectedModeIndex - 1) % 4;
-                            });
-                          },
-                        ),
-                      ),
-                      Text('  $selectedModeName  '),
-                      SizedBox(
-                        width: 30,
-                        height: 30,
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              selectedModeIndex = (selectedModeIndex + 1) % 4;
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+            child: StatsTable(
+              colNames: const [
+                'Overall',
+                'Solo',
+                'Doubles',
+                'Threes',
+                'Fours',
               ],
-              rows: [
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Kills')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.kills.toString())),
-                    DataCell(Text(selectedMode.kills.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Deaths')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.deaths.toString())),
-                    DataCell(Text(selectedMode.deaths.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('K/D Ratio')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.kdRatio.toStringAsFixed(2))),
-                    DataCell(Text(selectedMode.kdRatio.toStringAsFixed(2))),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Final kills')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.finalKills.toString())),
-                    DataCell(Text(selectedMode.finalKills.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Final deaths')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.finalDeaths.toString())),
-                    DataCell(Text(selectedMode.finalDeaths.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('FK/D Ratio')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.fkdRatio.toStringAsFixed(2))),
-                    DataCell(Text(selectedMode.fkdRatio.toStringAsFixed(2))),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Wins')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.wins.toString())),
-                    DataCell(Text(selectedMode.wins.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Losses')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.losses.toString())),
-                    DataCell(Text(selectedMode.losses.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('W/L Ratio')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.wlRatio.toStringAsFixed(2))),
-                    DataCell(Text(selectedMode.kills.toStringAsFixed(2))),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Winstreak')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.winstreak.toString())),
-                    DataCell(Text(selectedMode.winstreak.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Beds broken')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.bedsBroken.toString())),
-                    DataCell(Text(selectedMode.bedsBroken.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('Beds lost')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.bedsLost.toString())),
-                    DataCell(Text(selectedMode.bedsLost.toString())),
-                  ],
-                ),
-                DataRow(
-                  cells: [
-                    const DataCell(Text('BB/L Ratio')),
-                    DataCell(Text(widget.player.bedwarsStats.overall.bblRatio.toStringAsFixed(2))),
-                    DataCell(Text(selectedMode.bblRatio.toStringAsFixed(2))),
-                  ],
-                ),
-              ],
+              rows: {
+                'Kills': [
+                  player.bedwarsStats.overall.kills.toString(),
+                  player.bedwarsStats.solo.kills.toString(),
+                  player.bedwarsStats.doubles.kills.toString(),
+                  player.bedwarsStats.threes.kills.toString(),
+                  player.bedwarsStats.fours.kills.toString(),
+                ],
+                'Deaths': [
+                  player.bedwarsStats.overall.deaths.toString(),
+                  player.bedwarsStats.solo.deaths.toString(),
+                  player.bedwarsStats.doubles.deaths.toString(),
+                  player.bedwarsStats.threes.deaths.toString(),
+                  player.bedwarsStats.fours.deaths.toString(),
+                ],
+                'K/D Ratio': [
+                  (player.bedwarsStats.overall.kdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.solo.kdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.doubles.kdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.threes.kdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.fours.kdRatio).toStringAsFixed(2),
+                ],
+                'Final kills': [
+                  player.bedwarsStats.overall.finalKills.toString(),
+                  player.bedwarsStats.solo.finalKills.toString(),
+                  player.bedwarsStats.doubles.finalKills.toString(),
+                  player.bedwarsStats.threes.finalKills.toString(),
+                  player.bedwarsStats.fours.finalKills.toString(),
+                ],
+                'Final deaths': [
+                  player.bedwarsStats.overall.finalDeaths.toString(),
+                  player.bedwarsStats.solo.finalDeaths.toString(),
+                  player.bedwarsStats.doubles.finalDeaths.toString(),
+                  player.bedwarsStats.threes.finalDeaths.toString(),
+                  player.bedwarsStats.fours.finalDeaths.toString(),
+                ],
+                'FK/D Ratio': [
+                  (player.bedwarsStats.overall.fkdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.solo.fkdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.doubles.fkdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.threes.fkdRatio).toStringAsFixed(2),
+                  (player.bedwarsStats.fours.fkdRatio).toStringAsFixed(2),
+                ],
+                'Wins': [
+                  player.bedwarsStats.overall.wins.toString(),
+                  player.bedwarsStats.solo.wins.toString(),
+                  player.bedwarsStats.doubles.wins.toString(),
+                  player.bedwarsStats.threes.wins.toString(),
+                  player.bedwarsStats.fours.wins.toString(),
+                ],
+                'Losses': [
+                  player.bedwarsStats.overall.losses.toString(),
+                  player.bedwarsStats.solo.losses.toString(),
+                  player.bedwarsStats.doubles.losses.toString(),
+                  player.bedwarsStats.threes.losses.toString(),
+                  player.bedwarsStats.fours.losses.toString(),
+                ],
+                'W/L Ratio': [
+                  player.bedwarsStats.overall.wlRatio.toStringAsFixed(2),
+                  player.bedwarsStats.solo.wlRatio.toStringAsFixed(2),
+                  player.bedwarsStats.doubles.wlRatio.toStringAsFixed(2),
+                  player.bedwarsStats.threes.wlRatio.toStringAsFixed(2),
+                  player.bedwarsStats.fours.wlRatio.toStringAsFixed(2),
+                ],
+                'Winstreak': [
+                  player.bedwarsStats.overall.winstreak.toString(),
+                  player.bedwarsStats.solo.winstreak.toString(),
+                  player.bedwarsStats.doubles.winstreak.toString(),
+                  player.bedwarsStats.threes.winstreak.toString(),
+                  player.bedwarsStats.fours.winstreak.toString(),
+                ],
+                'Beds broken': [
+                  player.bedwarsStats.overall.bedsBroken.toString(),
+                  player.bedwarsStats.solo.bedsBroken.toString(),
+                  player.bedwarsStats.doubles.bedsBroken.toString(),
+                  player.bedwarsStats.threes.bedsBroken.toString(),
+                  player.bedwarsStats.fours.bedsBroken.toString(),
+                ],
+                'Beds lost': [
+                  player.bedwarsStats.overall.bedsLost.toString(),
+                  player.bedwarsStats.solo.bedsLost.toString(),
+                  player.bedwarsStats.doubles.bedsLost.toString(),
+                  player.bedwarsStats.threes.bedsLost.toString(),
+                  player.bedwarsStats.fours.bedsLost.toString(),
+                ],
+                'BB/L Ratio': [
+                  player.bedwarsStats.overall.bblRatio.toStringAsFixed(2),
+                  player.bedwarsStats.solo.bblRatio.toStringAsFixed(2),
+                  player.bedwarsStats.doubles.bblRatio.toStringAsFixed(2),
+                  player.bedwarsStats.threes.bblRatio.toStringAsFixed(2),
+                  player.bedwarsStats.fours.bblRatio.toStringAsFixed(2),
+                ],
+              },
             ),
           ),
         ],
