@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Center(
         child: !Provider.of<UserProvider>(context).isUuidSet
             ? Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: CustomSearchBar(
                   hint: 'Minecraft username',
                   callback: (input) => _uuidInputCallback(context, input),
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           callback: () {},
                         )
                       : Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           child: CustomSearchBar(
                             hint: 'Minecraft username',
                             callback: (input) => _uuidInputCallback(context, input),
@@ -124,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           callback: () {},
                         )
                       : Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                           child: CustomSearchBar(
                             hint: ' API Key',
                             callback: (input) => _apiKeyInputCallback(context, Constants.apiKey),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:hytracker/models/stat_record_models/bedwars_stats.dart';
 import 'package:hytracker/models/stat_record_models/duels_stats.dart';
 import 'package:hytracker/models/stat_record_models/skywars_stats.dart';
@@ -7,7 +9,7 @@ class Player {
   final String username;
   late final String formattedUsername;
 
-  late final double networkLvl;
+  //late final double networkLvl;
   late final int experience;
   late final double coinMultiplier;
   late final int karma;
@@ -22,10 +24,17 @@ class Player {
 
   Player.fromRawData({required this.username, required Map<String, dynamic> data}) {
     formattedUsername = _formattedUsername(data);
+
+    experience = data['player'].containsKey('networkExp') ? data['player']['networkExp'].toInt() : 0;
+    karma = data['player'].containsKey('karma') ? data['player']['karma'] : 0;
+
     bedwarsStats = BedwarsStats.fromRawData(data['player']['stats']['Bedwars']);
     skywarsStats = SkywarsStats.fromRawData(data['player']['stats']['SkyWars']);
     duelsStats = DuelsStats.fromRawData(data['player']['stats']['Duels']);
   }
+
+  //Level formuma from https://hypixel.net/threads/guide-network-level-equations.3412241
+  double get level => sqrt(experience / 1250 + 12.25) - 2.5;
 
   String _formattedUsername(Map<String, dynamic> data) {
     if (data['player'].containsKey('prefix')) {

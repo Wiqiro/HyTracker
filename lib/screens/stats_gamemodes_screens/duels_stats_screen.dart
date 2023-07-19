@@ -24,7 +24,7 @@ class DuelsStatsScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MinecraftText(
-            '${player.bedwarsStats.prefix} ${player.formattedUsername}',
+            player.formattedUsername,
             fontSize: 20,
             fontFamily: 'Minecraftia',
           ),

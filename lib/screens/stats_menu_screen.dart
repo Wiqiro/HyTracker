@@ -77,14 +77,26 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
       ),
       body: Container(
         alignment: Alignment.topCenter,
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+        padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
         child: SingleChildScrollView(
           child: Column(
             children: [
               MinecraftText(widget.player.formattedUsername, fontSize: 20, fontFamily: 'Minecraftia'),
-              CustomSearchBar(
-                hint: 'Enter player name',
-                callback: (input) => _searchPlayerCallback(input),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: CustomSearchBar(
+                  hint: 'Enter player name',
+                  callback: (input) => _searchPlayerCallback(input),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  '''
+Level: ${widget.player.level.toStringAsFixed(2)}
+Karma: ${widget.player.karma}''',
+                ),
               ),
               GamemodeCard(
                 title: 'Bedwars',
@@ -97,9 +109,8 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
                   );
                 },
                 text: '''
-Level: ${widget.player.bedwarsStats.level}
+Level: ${widget.player.bedwarsStats.level.toStringAsFixed(2)}
 Wins: ${widget.player.bedwarsStats.overall.wins}
-Losses: ${widget.player.bedwarsStats.overall.losses}
 Final kills: ${widget.player.bedwarsStats.overall.finalKills}
 Beds broken: ${widget.player.bedwarsStats.overall.bedsBroken}''',
               ),
@@ -114,9 +125,10 @@ Beds broken: ${widget.player.bedwarsStats.overall.bedsBroken}''',
                   );
                 },
                 text: '''
-Level: ${widget.player.skywarsStats.level}
+Level: ${widget.player.skywarsStats.level.toStringAsFixed(2)}
 Wins: ${widget.player.skywarsStats.overall.wins}
-Losses: ${widget.player.skywarsStats.overall.losses}''',
+Losses: ${widget.player.skywarsStats.overall.losses}
+''',
               ),
               GamemodeCard(
                 title: 'Duels',
@@ -129,9 +141,10 @@ Losses: ${widget.player.skywarsStats.overall.losses}''',
                   );
                 },
                 text: '''
-Level: ${widget.player.skywarsStats.level}
-Wins: ${widget.player.skywarsStats.overall.wins}
-Losses: ${widget.player.skywarsStats.overall.losses}''',
+Wins: ${widget.player.duelsStats.overall.wins}
+Losses: ${widget.player.duelsStats.overall.losses}
+Kills: ${widget.player.duelsStats.overall.kills}
+''',
               ),
             ],
           ),

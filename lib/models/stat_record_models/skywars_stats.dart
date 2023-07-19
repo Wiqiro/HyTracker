@@ -13,8 +13,8 @@ class SkywarsStats extends StatRecord {
   late final SkywarsModeStats overall;
   late final SkywarsModeStats soloNormal;
   late final SkywarsModeStats soloInsane;
-  late final SkywarsModeStats teamsNormal;
-  late final SkywarsModeStats teamsInsane;
+  late final SkywarsModeStats teamNormal;
+  late final SkywarsModeStats teamInsane;
 
   SkywarsStats({
     this.experience = 0,
@@ -26,8 +26,9 @@ class SkywarsStats extends StatRecord {
     this.coins = 0,
     this.overall = const SkywarsModeStats(),
     this.soloNormal = const SkywarsModeStats(),
-    this.teamsNormal = const SkywarsModeStats(),
-    this.teamsInsane = const SkywarsModeStats(),
+    this.soloInsane = const SkywarsModeStats(),
+    this.teamNormal = const SkywarsModeStats(),
+    this.teamInsane = const SkywarsModeStats(),
   });
 
   SkywarsStats.fromRawData(Map<String, dynamic> data) {
@@ -40,7 +41,32 @@ class SkywarsStats extends StatRecord {
     shards = data.containsKey('shard') ? data['shard'] : 0;
     angelOfDeath = data.containsKey('angel_of_death_level') ? data['angel_of_death_level'] : 0;
     coins = data.containsKey('coins') ? data['coins'] : 0;
+
     overall = SkywarsModeStats(
+      kills: data.containsKey('kills') ? data['kills'] : 0,
+      deaths: data.containsKey('deaths') ? data['deaths'] : 0,
+      wins: data.containsKey('wins') ? data['wins'] : 0,
+      losses: data.containsKey('losses') ? data['losses'] : 0,
+    );
+    soloNormal = SkywarsModeStats(
+      kills: data.containsKey('kills_solo_normal') ? data['kills_solo_normal'] : 0,
+      deaths: data.containsKey('deaths_solo_normal') ? data['deaths_solo_normal'] : 0,
+      wins: data.containsKey('wins_solo_normal') ? data['wins_solo_normal'] : 0,
+      losses: data.containsKey('losses_solo_normal') ? data['losses_solo_normal'] : 0,
+    );
+    soloInsane = SkywarsModeStats(
+      kills: data.containsKey('kills_solo_insane') ? data['kills_solo_insane'] : 0,
+      deaths: data.containsKey('deaths_solo_insane') ? data['deaths_solo_insane'] : 0,
+      wins: data.containsKey('wins_solo_insane') ? data['wins_solo_insane'] : 0,
+      losses: data.containsKey('losses_solo_insane') ? data['losses_solo_insane'] : 0,
+    );
+    teamNormal = SkywarsModeStats(
+      kills: data.containsKey('kills_team_normal') ? data['kills_team_normal'] : 0,
+      deaths: data.containsKey('deaths_team_normal') ? data['deaths_team_normal'] : 0,
+      wins: data.containsKey('wins_team_normal') ? data['wins_team_normal'] : 0,
+      losses: data.containsKey('losses_team_normal') ? data['losses_team_normal'] : 0,
+    );
+    teamInsane = SkywarsModeStats(
       kills: data.containsKey('kills') ? data['kills'] : 0,
       deaths: data.containsKey('deaths') ? data['deaths'] : 0,
       wins: data.containsKey('wins') ? data['wins'] : 0,
