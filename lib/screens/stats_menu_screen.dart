@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/providers/user.dart';
-import 'package:hytracker/screens/stats_gamemodes_screens/duels_stats_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'stats_gamemodes_screens/bedwars_stats_screen.dart';
 import 'stats_gamemodes_screens/skywars_stats_screen.dart';
+import 'stats_gamemodes_screens/duels_stats_screen.dart';
 import '../models/player.dart';
 import '../utils/hypixel_api_wrapper.dart';
 import '../widgets/minecraft_text.dart';
@@ -57,11 +58,13 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
           input.toLowerCase() != loggedUsername.toLowerCase()) {
         Navigator.of(context).push(route);
       } else {
-        Navigator.of(context).pushReplacement(route);
+        Navigator.of(
+          context,
+        ).pushReplacement(route);
       }
     } catch (error) {
-      if (mounted) Navigator.of(context).pop();
-      rethrow;
+      if (mounted) Navigator.of(context, rootNavigator: true).pop();
+      Fluttertoast.showToast(msg: error.toString());
     }
   }
 

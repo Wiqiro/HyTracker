@@ -61,7 +61,7 @@ class UserProvider with ChangeNotifier {
     try {
       final preferences = await SharedPreferences.getInstance();
       final userData = json.encode({
-        '_uuid': _uuid,
+        'uuid': _uuid,
         'apiKey': apiKey,
       });
       preferences.setString('userData', userData);
@@ -73,47 +73,47 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
-    final preferences = await SharedPreferences.getInstance(); //TODO: may fail ?
-    preferences.clear();
-    isUuidSet = false;
-    isApiSet = false;
-    isUserSet = false;
-    notifyListeners();
-  }
-
-  Future<bool> tryAutoLogin() async {
     try {
       final preferences = await SharedPreferences.getInstance();
+      preferences.clear();
+    } catch (error) {
+      rethrow;
+    } finally {
+      isUuidSet = false;
+      isApiSet = false;
+      isUserSet = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> tryAutoLogin() async {
+    try {
+      final preferences = await SharedPreferences.getInstance();
+
       if (!preferences.containsKey('userData')) {
-        throw 'Data not set';
+        throw 'No previous login';
       }
       final userData = json.decode(preferences.getString('userData')!) as Map<String, dynamic>;
-
-      if (userData.containsKey('_uuid') && userData.containsKey('apiKey')) {
-        _uuid = userData['_uuid'];
+      if (userData.containsKey('uuid') && userData.containsKey('apiKey')) {
+        _uuid = userData['uuid'];
         apiKey = userData['apiKey'];
       } else {
-        throw 'Data not set';
+        throw 'No previous login';
       }
 
       final data = await HttpRequests().getUsernameFromUuid(_uuid);
-      if (data.containsKey('name')) {
-        username = data['name'];
-      } else {
-        throw 'Wrong _uuid';
-      }
+      username = data['name'];
 
-      avatar = await HttpRequests().getUserAvatar(userData['_uuid']);
+      avatar = await HttpRequests().getUserAvatar(userData['uuid']);
       isUuidSet = true;
 
       await setHypixelUserData(apiKey);
 
       isUserSet = true;
       notifyListeners();
-      return true;
     } catch (error) {
       logout();
-      return false; //TODO: throw all errors and remove return statement
+      rethrow;
     }
   }
 }

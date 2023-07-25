@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hytracker/screens/navigation_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await Provider.of<UserProvider>(context, listen: false).setMcUserData(username);
     } catch (error) {
-      rethrow;
+      Fluttertoast.showToast(msg: error.toString());
     } finally {
       if (context.mounted) Navigator.of(context).pop();
     }
@@ -45,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
     try {
       await Provider.of<UserProvider>(context, listen: false).setHypixelUserData(key);
     } catch (error) {
-      rethrow;
+      Fluttertoast.showToast(msg: error.toString());
     } finally {
       if (context.mounted) Navigator.of(context).pop();
     }
@@ -63,13 +64,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     Provider.of<UserProvider>(context, listen: false).tryAutoLogin().then((value) {
       Navigator.of(context).pop();
-      if (value) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const NavigationScreen(),
-          ),
-        );
-      }
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const NavigationScreen(),
+        ),
+      );
+    }).catchError((error) {
+      Navigator.of(context).pop();
+      //if (error.toString().compareTo('No previous login') != 0) {
+      Fluttertoast.showToast(msg: error.toString());
+      //}
     });
     super.initState();
   }

@@ -1,28 +1,18 @@
 import 'package:hytracker/models/stat_record.dart';
 
-/* enum Prestiges {
-  none,
-  rookie,
-  iron,
-  gold,
-  diamond,
-  master,
-  legend,
-  grandmaster,
-  godlike,
-  celestial,
-  divine,
-  ascended,
-} */
-
 class DuelsStats extends StatRecord {
   late final int coins;
   late final String prefix;
   late final DuelsModeStats overall;
-  late final DuelsModeStats uhc;
-  late final DuelsModeStats op;
-  late final DuelsModeStats skywars;
-  late final DuelsModeStats megaWalls;
+  late final DuelsModeStats uhcSolo;
+  late final DuelsModeStats uhcDoubles;
+  late final DuelsModeStats uhcFours;
+  late final DuelsModeStats opSolo;
+  late final DuelsModeStats opDoubles;
+  late final DuelsModeStats skywarsSolo;
+  late final DuelsModeStats skywarsDoubles;
+  late final DuelsModeStats megaWallsSolo;
+  late final DuelsModeStats megaWallsDoubles;
   late final DuelsModeStats bow;
   late final DuelsModeStats blitz;
   late final DuelsModeStats sumo;
@@ -39,10 +29,15 @@ class DuelsStats extends StatRecord {
     this.coins = 0,
     this.prefix = '',
     this.overall = const DuelsModeStats(),
-    this.uhc = const DuelsModeStats(),
-    this.op = const DuelsModeStats(),
-    this.skywars = const DuelsModeStats(),
-    this.megaWalls = const DuelsModeStats(),
+    this.uhcSolo = const DuelsModeStats(),
+    this.uhcDoubles = const DuelsModeStats(),
+    this.uhcFours = const DuelsModeStats(),
+    this.opSolo = const DuelsModeStats(),
+    this.opDoubles = const DuelsModeStats(),
+    this.skywarsSolo = const DuelsModeStats(),
+    this.skywarsDoubles = const DuelsModeStats(),
+    this.megaWallsSolo = const DuelsModeStats(),
+    this.megaWallsDoubles = const DuelsModeStats(),
     this.bow = const DuelsModeStats(),
     this.blitz = const DuelsModeStats(),
     this.sumo = const DuelsModeStats(),
@@ -67,34 +62,71 @@ class DuelsStats extends StatRecord {
       losses: data.containsKey('losses') ? data['losses'] : 0,
       isOverall: true,
     );
-    uhc = DuelsModeStats(
+
+    uhcSolo = DuelsModeStats(
       kills: data.containsKey('uhc_duel_kills') ? data['uhc_duel_kills'] : 0,
       deaths: data.containsKey('uhc_duel_deaths') ? data['uhc_duel_deaths'] : 0,
       wins: data.containsKey('uhc_duel_wins') ? data['uhc_duel_wins'] : 0,
       losses: data.containsKey('uhc_duel_losses') ? data['uhc_duel_losses'] : 0,
       isOverall: false,
     );
-    op = DuelsModeStats(
+    uhcDoubles = DuelsModeStats(
+      kills: data.containsKey('uhc_doubles_kills') ? data['uhc_doubles_kills'] : 0,
+      deaths: data.containsKey('uhc_doubles_deaths') ? data['uhc_doubles_deaths'] : 0,
+      wins: data.containsKey('uhc_doubles_wins') ? data['uhc_doubles_wins'] : 0,
+      losses: data.containsKey('uhc_doubles_losses') ? data['uhc_doubles_losses'] : 0,
+      isOverall: false,
+    );
+    uhcFours = DuelsModeStats(
+      kills: data.containsKey('uhc_four_kills') ? data['uhc_four_kills'] : 0,
+      deaths: data.containsKey('uhc_four_deaths') ? data['uhc_four_deaths'] : 0,
+      wins: data.containsKey('uhc_four_wins') ? data['uhc_four_wins'] : 0,
+      losses: data.containsKey('uhc_four_losses') ? data['uhc_four_losses'] : 0,
+      isOverall: false,
+    );
+
+    opSolo = DuelsModeStats(
       kills: data.containsKey('op_duel_kills') ? data['op_duel_kills'] : 0,
       deaths: data.containsKey('op_duel_deaths') ? data['op_duel_deaths'] : 0,
       wins: data.containsKey('op_duel_wins') ? data['op_duel_wins'] : 0,
       losses: data.containsKey('op_duel_losses') ? data['op_duel_losses'] : 0,
       isOverall: false,
     );
+    opDoubles = DuelsModeStats(
+      kills: data.containsKey('op_doubles_kills') ? data['op_doubles_kills'] : 0,
+      deaths: data.containsKey('op_doubles_deaths') ? data['op_doubles_deaths'] : 0,
+      wins: data.containsKey('op_doubles_wins') ? data['op_doubles_wins'] : 0,
+      losses: data.containsKey('op_doubles_losses') ? data['op_doubles_losses'] : 0,
+      isOverall: false,
+    );
 
-    skywars = DuelsModeStats(
+    skywarsSolo = DuelsModeStats(
       kills: data.containsKey('sw_duel_kills') ? data['sw_duel_kills'] : 0,
       deaths: data.containsKey('sw_duel_deaths') ? data['sw_duel_deaths'] : 0,
       wins: data.containsKey('sw_duel_wins') ? data['sw_duel_wins'] : 0,
       losses: data.containsKey('sw_duel_losses') ? data['sw_duel_losses'] : 0,
       isOverall: false,
     );
+    skywarsDoubles = DuelsModeStats(
+      kills: data.containsKey('sw_doubles_kills') ? data['sw_doubles_kills'] : 0,
+      deaths: data.containsKey('sw_doubles_deaths') ? data['sw_doubles_deaths'] : 0,
+      wins: data.containsKey('sw_doubles_wins') ? data['sw_doubles_wins'] : 0,
+      losses: data.containsKey('sw_doubles_losses') ? data['sw_doubles_losses'] : 0,
+      isOverall: false,
+    );
 
-    megaWalls = DuelsModeStats(
+    megaWallsSolo = DuelsModeStats(
       kills: data.containsKey('mw_duel_kills') ? data['mw_duel_kills'] : 0,
       deaths: data.containsKey('mw_duel_deaths') ? data['mw_duel_deaths'] : 0,
       wins: data.containsKey('mw_duel_wins') ? data['mw_duel_wins'] : 0,
       losses: data.containsKey('mw_duel_losses') ? data['mw_duel_losses'] : 0,
+      isOverall: false,
+    );
+    megaWallsDoubles = DuelsModeStats(
+      kills: data.containsKey('mw_doubles_kills') ? data['mw_doubles_kills'] : 0,
+      deaths: data.containsKey('mw_doubles_deaths') ? data['mw_doubles_deaths'] : 0,
+      wins: data.containsKey('mw_doubles_wins') ? data['mw_doubles_wins'] : 0,
+      losses: data.containsKey('mw_doubles_losses') ? data['mw_doubles_losses'] : 0,
       isOverall: false,
     );
 
@@ -185,10 +217,42 @@ class DuelsStats extends StatRecord {
       isOverall: false,
     );
   }
+
+  DuelsModeStats get uhcOverall => DuelsModeStats(
+        kills: uhcSolo.kills + uhcDoubles.kills + uhcFours.kills,
+        deaths: uhcSolo.deaths + uhcDoubles.deaths + uhcFours.deaths,
+        wins: uhcSolo.wins + uhcDoubles.wins + uhcFours.wins,
+        losses: uhcSolo.losses + uhcDoubles.losses + uhcFours.losses,
+        isOverall: false,
+      );
+
+  DuelsModeStats get opOverall => DuelsModeStats(
+        kills: opSolo.kills + opDoubles.kills,
+        deaths: opSolo.deaths + opDoubles.deaths,
+        wins: opSolo.wins + opDoubles.wins,
+        losses: opSolo.losses + opDoubles.losses,
+        isOverall: false,
+      );
+
+  DuelsModeStats get skywarsOverall => DuelsModeStats(
+        kills: skywarsSolo.kills + skywarsDoubles.kills,
+        deaths: skywarsSolo.deaths + skywarsDoubles.deaths,
+        wins: skywarsSolo.wins + skywarsDoubles.wins,
+        losses: skywarsSolo.losses + skywarsDoubles.losses,
+        isOverall: false,
+      );
+
+  DuelsModeStats get megaWallsOverall => DuelsModeStats(
+        kills: megaWallsSolo.kills + megaWallsDoubles.kills,
+        deaths: megaWallsSolo.deaths + megaWallsDoubles.deaths,
+        wins: megaWallsSolo.wins + megaWallsDoubles.wins,
+        losses: megaWallsSolo.losses + megaWallsDoubles.losses,
+        isOverall: false,
+      );
 }
 
 class DuelsModeStats {
-  final bool isOverall; //TODO: remove this
+  final bool isOverall;
 
   final int kills;
   final int deaths;

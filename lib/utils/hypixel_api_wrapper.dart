@@ -8,11 +8,19 @@ class HttpRequests {
     try {
       final url = 'https://api.mojang.com/users/profiles/minecraft/$username';
       final response = await http.get(Uri.parse(url));
-      final uuidData = json.decode(response.body) as Map<String, dynamic>;
-      //TODO: handle error responses
-      return uuidData;
+      final data = json.decode(response.body) as Map<String, dynamic>;
+
+      if (data.containsKey('id') && data.containsKey('name')) {
+        return data;
+      } else {
+        throw 'Player does not exist';
+      }
     } catch (error) {
-      rethrow;
+      if (error.toString().compareTo('Player does not exist') == 0) {
+        rethrow;
+      } else {
+        throw 'Couldn\'t get minecraft username';
+      }
     }
   }
 
@@ -21,10 +29,17 @@ class HttpRequests {
       final url = 'https://api.mojang.com/user/profile/$uuid';
       final response = await http.get(Uri.parse(url));
       final data = json.decode(response.body) as Map<String, dynamic>;
-      //TODO: handle error responses
-      return data;
+      if (data.containsKey('id') && data.containsKey('name')) {
+        return data;
+      } else {
+        throw 'Couldn\'t find player';
+      }
     } catch (error) {
-      rethrow;
+      if (error.toString().compareTo('Couldn\'t find player') == 0) {
+        rethrow;
+      } else {
+        throw 'Couldn\'t get minecraft uuid';
+      }
     }
   }
 
@@ -33,10 +48,10 @@ class HttpRequests {
       final url = 'https://crafatar.com/avatars/$uuid?size=8&overlay';
       //final url = 'https://minotar.net/helm/$uuid';
       final data = await http.get(Uri.parse(url));
-      //TODO: handle error responses
+
       return data.bodyBytes;
     } catch (error) {
-      rethrow;
+      throw 'Couldn\'t get player avatar';
     }
   }
 
@@ -45,12 +60,18 @@ class HttpRequests {
       final url = 'https://api.hypixel.net/player?key=$apiKey&uuid=$uuid';
       final response = await http.get(Uri.parse(url));
       final data = json.decode(response.body) as Map<String, dynamic>;
-      if (!data['success']) {
+
+      if (data.containsKey('success') && data['success']) {
+        return data;
+      } else {
         throw data['cause'];
       }
-      return data;
     } catch (error) {
-      rethrow;
+      if (error.toString().compareTo('Invalid API key') == 0) {
+        rethrow;
+      } else {
+        throw 'Couldn\'t  get Hypixel player data';
+      }
     }
   }
 }
