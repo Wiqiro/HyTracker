@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/screens/recent_screen.dart';
 import 'package:hytracker/screens/stats_menu_screen.dart';
-import 'package:hytracker/screens/tracker_screen.dart';
+import 'package:hytracker/screens/tracker_setting_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
@@ -49,7 +49,7 @@ class _TabsScreenState extends State<NavigationScreen> {
             Navigator(
               key: _keys[1],
               onGenerateRoute: (route) => MaterialPageRoute(
-                builder: (context) => const TrackerScreen(),
+                builder: (context) => const TrackerSettingScreen(),
                 settings: route,
               ),
             ),

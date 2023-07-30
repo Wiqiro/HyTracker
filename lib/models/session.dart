@@ -4,28 +4,27 @@ import 'stat_record.dart';
 import '../utils/game_types.dart';
 
 class Session {
-  final String id;
-  final String playerUuid;
+  //final String playerUuid;
   final GameTypes gameType;
-  final DateTime startTime;
+  final DateTime startTime = DateTime.now();
   DateTime? endTime;
 
+  bool hasFinished = false;
+
   bool stopDeath = false;
-  DateTime? timerDuration;
+  /* DateTime? timerDuration;
   String? goalName;
-  int? goalValue;
+  int? goalValue; */
 
   List<StatRecord> _records = [];
 
   Session({
-    required this.id,
-    required this.playerUuid,
+    //required this.playerUuid,
     required this.gameType,
-    required this.startTime,
     stopDeath,
-    timerDuration,
+    /* timerDuration,
     goalName,
-    goalValue,
+    goalValue, */
   });
 
   List<StatRecord> get records {

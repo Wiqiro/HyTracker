@@ -149,6 +149,9 @@ Losses: ${widget.player.duelsStats.overall.losses}
 Kills: ${widget.player.duelsStats.overall.kills}
 ''',
               ),
+              const SizedBox(
+                height: 100,
+              ),
             ],
           ),
         ),

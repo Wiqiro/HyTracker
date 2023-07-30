@@ -23,7 +23,13 @@ class DuelsStats extends StatRecord {
   late final DuelsModeStats boxing;
   late final DuelsModeStats parkour;
   late final DuelsModeStats duelArena;
-  late final DuelsModeStats bridge;
+  late final DuelsModeStatsBridge bridge1v1;
+  late final DuelsModeStatsBridge bridge2v2;
+  late final DuelsModeStatsBridge bridge3v3;
+  late final DuelsModeStatsBridge bridge4v4;
+  late final DuelsModeStatsBridge bridge2v2v2v2;
+  late final DuelsModeStatsBridge bridge3v3v3v3;
+  late final DuelsModeStatsBridge bridgeCapture;
 
   DuelsStats({
     this.coins = 0,
@@ -48,7 +54,13 @@ class DuelsStats extends StatRecord {
     this.boxing = const DuelsModeStats(),
     this.parkour = const DuelsModeStats(),
     this.duelArena = const DuelsModeStats(),
-    this.bridge = const DuelsModeStats(),
+    this.bridge1v1 = const DuelsModeStatsBridge(),
+    this.bridge2v2 = const DuelsModeStatsBridge(),
+    this.bridge3v3 = const DuelsModeStatsBridge(),
+    this.bridge4v4 = const DuelsModeStatsBridge(),
+    this.bridge2v2v2v2 = const DuelsModeStatsBridge(),
+    this.bridge3v3v3v3 = const DuelsModeStatsBridge(),
+    this.bridgeCapture = const DuelsModeStatsBridge(),
   });
 
   DuelsStats.fromRawData(Map<String, dynamic> data) {
@@ -68,21 +80,18 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('uhc_duel_deaths') ? data['uhc_duel_deaths'] : 0,
       wins: data.containsKey('uhc_duel_wins') ? data['uhc_duel_wins'] : 0,
       losses: data.containsKey('uhc_duel_losses') ? data['uhc_duel_losses'] : 0,
-      isOverall: false,
     );
     uhcDoubles = DuelsModeStats(
       kills: data.containsKey('uhc_doubles_kills') ? data['uhc_doubles_kills'] : 0,
       deaths: data.containsKey('uhc_doubles_deaths') ? data['uhc_doubles_deaths'] : 0,
       wins: data.containsKey('uhc_doubles_wins') ? data['uhc_doubles_wins'] : 0,
       losses: data.containsKey('uhc_doubles_losses') ? data['uhc_doubles_losses'] : 0,
-      isOverall: false,
     );
     uhcFours = DuelsModeStats(
       kills: data.containsKey('uhc_four_kills') ? data['uhc_four_kills'] : 0,
       deaths: data.containsKey('uhc_four_deaths') ? data['uhc_four_deaths'] : 0,
       wins: data.containsKey('uhc_four_wins') ? data['uhc_four_wins'] : 0,
       losses: data.containsKey('uhc_four_losses') ? data['uhc_four_losses'] : 0,
-      isOverall: false,
     );
 
     opSolo = DuelsModeStats(
@@ -90,14 +99,12 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('op_duel_deaths') ? data['op_duel_deaths'] : 0,
       wins: data.containsKey('op_duel_wins') ? data['op_duel_wins'] : 0,
       losses: data.containsKey('op_duel_losses') ? data['op_duel_losses'] : 0,
-      isOverall: false,
     );
     opDoubles = DuelsModeStats(
       kills: data.containsKey('op_doubles_kills') ? data['op_doubles_kills'] : 0,
       deaths: data.containsKey('op_doubles_deaths') ? data['op_doubles_deaths'] : 0,
       wins: data.containsKey('op_doubles_wins') ? data['op_doubles_wins'] : 0,
       losses: data.containsKey('op_doubles_losses') ? data['op_doubles_losses'] : 0,
-      isOverall: false,
     );
 
     skywarsSolo = DuelsModeStats(
@@ -105,14 +112,12 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('sw_duel_deaths') ? data['sw_duel_deaths'] : 0,
       wins: data.containsKey('sw_duel_wins') ? data['sw_duel_wins'] : 0,
       losses: data.containsKey('sw_duel_losses') ? data['sw_duel_losses'] : 0,
-      isOverall: false,
     );
     skywarsDoubles = DuelsModeStats(
       kills: data.containsKey('sw_doubles_kills') ? data['sw_doubles_kills'] : 0,
       deaths: data.containsKey('sw_doubles_deaths') ? data['sw_doubles_deaths'] : 0,
       wins: data.containsKey('sw_doubles_wins') ? data['sw_doubles_wins'] : 0,
       losses: data.containsKey('sw_doubles_losses') ? data['sw_doubles_losses'] : 0,
-      isOverall: false,
     );
 
     megaWallsSolo = DuelsModeStats(
@@ -120,14 +125,12 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('mw_duel_deaths') ? data['mw_duel_deaths'] : 0,
       wins: data.containsKey('mw_duel_wins') ? data['mw_duel_wins'] : 0,
       losses: data.containsKey('mw_duel_losses') ? data['mw_duel_losses'] : 0,
-      isOverall: false,
     );
     megaWallsDoubles = DuelsModeStats(
       kills: data.containsKey('mw_doubles_kills') ? data['mw_doubles_kills'] : 0,
       deaths: data.containsKey('mw_doubles_deaths') ? data['mw_doubles_deaths'] : 0,
       wins: data.containsKey('mw_doubles_wins') ? data['mw_doubles_wins'] : 0,
       losses: data.containsKey('mw_doubles_losses') ? data['mw_doubles_losses'] : 0,
-      isOverall: false,
     );
 
     bow = DuelsModeStats(
@@ -135,7 +138,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('bow_duel_deaths') ? data['bow_duel_deaths'] : 0,
       wins: data.containsKey('bow_duel_wins') ? data['bow_duel_wins'] : 0,
       losses: data.containsKey('bow_duel_losses') ? data['bow_duel_losses'] : 0,
-      isOverall: false,
     );
 
     blitz = DuelsModeStats(
@@ -143,7 +145,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('blitz_duel_deaths') ? data['blitz_duel_deaths'] : 0,
       wins: data.containsKey('blitz_duel_wins') ? data['blitz_duel_wins'] : 0,
       losses: data.containsKey('blitz_duel_losses') ? data['blitz_duel_losses'] : 0,
-      isOverall: false,
     );
 
     sumo = DuelsModeStats(
@@ -151,7 +152,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('sumo_duel_deaths') ? data['sumo_duel_deaths'] : 0,
       wins: data.containsKey('sumo_duel_wins') ? data['sumo_duel_wins'] : 0,
       losses: data.containsKey('sumo_duel_losses') ? data['sumo_duel_losses'] : 0,
-      isOverall: false,
     );
 
     bowspleef = DuelsModeStats(
@@ -159,7 +159,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('bowspleef_duel_deaths') ? data['bowspleef_duel_deaths'] : 0,
       wins: data.containsKey('bowspleef_duel_wins') ? data['bowspleef_duel_wins'] : 0,
       losses: data.containsKey('bowspleef_duel_losses') ? data['bowspleef_duel_losses'] : 0,
-      isOverall: false,
     );
 
     classic = DuelsModeStats(
@@ -167,7 +166,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('classic_duel_deaths') ? data['classic_duel_deaths'] : 0,
       wins: data.containsKey('classic_duel_wins') ? data['classic_duel_wins'] : 0,
       losses: data.containsKey('classic_duel_losses') ? data['classic_duel_losses'] : 0,
-      isOverall: false,
     );
 
     noDebuff = DuelsModeStats(
@@ -175,7 +173,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('potion_duel_deaths') ? data['potion_duel_deaths'] : 0,
       wins: data.containsKey('potion_duel_wins') ? data['potion_duel_wins'] : 0,
       losses: data.containsKey('potion_duel_losses') ? data['potion_duel_losses'] : 0,
-      isOverall: false,
     );
 
     combo = DuelsModeStats(
@@ -183,7 +180,6 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('combo_duel_deaths') ? data['combo_duel_deaths'] : 0,
       wins: data.containsKey('combo_duel_wins') ? data['combo_duel_wins'] : 0,
       losses: data.containsKey('combo_duel_losses') ? data['combo_duel_losses'] : 0,
-      isOverall: false,
     );
 
     boxing = DuelsModeStats(
@@ -191,14 +187,12 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('boxing_duel_deaths') ? data['boxing_duel_deaths'] : 0,
       wins: data.containsKey('boxing_duel_wins') ? data['boxing_duel_wins'] : 0,
       losses: data.containsKey('boxing_duel_losses') ? data['boxing_duel_losses'] : 0,
-      isOverall: false,
     );
 
     parkour = DuelsModeStats(
       deaths: data.containsKey('parkour_eight_deaths') ? data['parkour_eight_deaths'] : 0,
       wins: data.containsKey('parkour_eight_wins') ? data['parkour_eight_wins'] : 0,
       losses: data.containsKey('parkour_eight_losses') ? data['parkour_eight_losses'] : 0,
-      isOverall: false,
     );
 
     duelArena = DuelsModeStats(
@@ -206,15 +200,56 @@ class DuelsStats extends StatRecord {
       deaths: data.containsKey('duel_arena_deaths') ? data['duel_arena_deaths'] : 0,
       wins: data.containsKey('duel_arena_wins') ? data['duel_arena_wins'] : 0,
       losses: data.containsKey('duel_arena_losses') ? data['duel_arena_losses'] : 0,
-      isOverall: false,
     );
 
-    bridge = DuelsModeStats(
-      kills: data.containsKey('bridge_kills') ? data['bridge_kills'] : 0,
-      deaths: data.containsKey('bridge_deaths') ? data['bridge_deaths'] : 0,
+    bridge1v1 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_duel_bridge_kills') ? data['bridge_duel_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_duel_bridge_deaths') ? data['bridge_duel_bridge_deaths'] : 0,
       wins: data.containsKey('bridge_duel_wins') ? data['bridge_duel_wins'] : 0,
       losses: data.containsKey('bridge_duel_losses') ? data['bridge_duel_losses'] : 0,
-      isOverall: false,
+      scores: data.containsKey('bridge_duel_goals') ? data['bridge_duel_goals'] : 0,
+    );
+    bridge2v2 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_doubles_bridge_kills') ? data['bridge_doubles_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_doubles_bridge_deaths') ? data['bridge_doubles_bridge_deaths'] : 0,
+      wins: data.containsKey('bridge_doubles_wins') ? data['bridge_doubles_wins'] : 0,
+      losses: data.containsKey('bridge_doubles_losses') ? data['bridge_doubles_losses'] : 0,
+      scores: data.containsKey('bridge_doubles_goals') ? data['bridge_doubles_goals'] : 0,
+    );
+    bridge3v3 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_threes_bridge_kills') ? data['bridge_threes_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_threes_bridge_deaths') ? data['bridge_threes_bridge_deaths'] : 0,
+      wins: data.containsKey('bridge_threes_wins') ? data['bridge_threes_wins'] : 0,
+      losses: data.containsKey('bridge_threes_losses') ? data['bridge_threes_losses'] : 0,
+      scores: data.containsKey('bridge_threes_goals') ? data['bridge_threes_goals'] : 0,
+    );
+    bridge4v4 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_four_bridge_kills') ? data['bridge_four_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_four_bridge_deaths') ? data['bridge_four_bridge_deaths'] : 0,
+      wins: data.containsKey('bridge_four_wins') ? data['bridge_four_wins'] : 0,
+      losses: data.containsKey('bridge_four_losses') ? data['bridge_four_losses'] : 0,
+      scores: data.containsKey('bridge_four_goals') ? data['bridge_four_goals'] : 0,
+    );
+    bridge2v2v2v2 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_2v2v2v2_bridge_kills') ? data['bridge_2v2v2v2_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_2v2v2v2_bridge_deaths') ? data['bridge_2v2v2v2_bridge_deaths'] : 0,
+      wins: data.containsKey('bridge_2v2v2v2_wins') ? data['bridge_2v2v2v2_wins'] : 0,
+      losses: data.containsKey('bridge_2v2v2v2_losses') ? data['bridge_2v2v2v2_losses'] : 0,
+      scores: data.containsKey('bridge_2v2v2v2_goals') ? data['bridge_2v2v2v2_goals'] : 0,
+    );
+    bridge3v3v3v3 = DuelsModeStatsBridge(
+      kills: data.containsKey('bridge_3v3v3v3_bridge_kills') ? data['bridge_3v3v3v3_bridge_kills'] : 0,
+      deaths: data.containsKey('bridge_3v3v3v3_bridge_deaths') ? data['bridge_3v3v3v3_bridge_deaths'] : 0,
+      wins: data.containsKey('bridge_3v3v3v3_wins') ? data['bridge_3v3v3v3_wins'] : 0,
+      losses: data.containsKey('bridge_3v3v3v3_losses') ? data['bridge_3v3v3v3_losses'] : 0,
+      scores: data.containsKey('bridge_3v3v3v3_goals') ? data['bridge_3v3v3v3_goals'] : 0,
+    );
+    bridgeCapture = DuelsModeStatsBridge(
+      kills: data.containsKey('capture_threes_bridge_kills') ? data['capture_threes_bridge_kills'] : 0,
+      deaths: data.containsKey('capture_threes_bridge_deaths') ? data['capture_threes_bridge_deaths'] : 0,
+      wins: data.containsKey('capture_threes_wins') ? data['capture_threes_wins'] : 0,
+      losses: data.containsKey('capture_threes_losses') ? data['capture_threes_losses'] : 0,
+      scores: data.containsKey('captures') ? data['captures '] : 0,
     );
   }
 
@@ -223,7 +258,6 @@ class DuelsStats extends StatRecord {
         deaths: uhcSolo.deaths + uhcDoubles.deaths + uhcFours.deaths,
         wins: uhcSolo.wins + uhcDoubles.wins + uhcFours.wins,
         losses: uhcSolo.losses + uhcDoubles.losses + uhcFours.losses,
-        isOverall: false,
       );
 
   DuelsModeStats get opOverall => DuelsModeStats(
@@ -231,7 +265,6 @@ class DuelsStats extends StatRecord {
         deaths: opSolo.deaths + opDoubles.deaths,
         wins: opSolo.wins + opDoubles.wins,
         losses: opSolo.losses + opDoubles.losses,
-        isOverall: false,
       );
 
   DuelsModeStats get skywarsOverall => DuelsModeStats(
@@ -239,7 +272,6 @@ class DuelsStats extends StatRecord {
         deaths: skywarsSolo.deaths + skywarsDoubles.deaths,
         wins: skywarsSolo.wins + skywarsDoubles.wins,
         losses: skywarsSolo.losses + skywarsDoubles.losses,
-        isOverall: false,
       );
 
   DuelsModeStats get megaWallsOverall => DuelsModeStats(
@@ -247,7 +279,43 @@ class DuelsStats extends StatRecord {
         deaths: megaWallsSolo.deaths + megaWallsDoubles.deaths,
         wins: megaWallsSolo.wins + megaWallsDoubles.wins,
         losses: megaWallsSolo.losses + megaWallsDoubles.losses,
-        isOverall: false,
+      );
+  DuelsModeStatsBridge get bridgeOverall => DuelsModeStatsBridge(
+        kills: bridge1v1.kills +
+            bridge2v2.kills +
+            bridge3v3.kills +
+            bridge4v4.kills +
+            bridge2v2v2v2.kills +
+            bridge3v3v3v3.kills +
+            bridgeCapture.kills,
+        deaths: bridge1v1.deaths +
+            bridge2v2.deaths +
+            bridge3v3.deaths +
+            bridge4v4.deaths +
+            bridge2v2v2v2.deaths +
+            bridge3v3v3v3.deaths +
+            bridgeCapture.deaths,
+        wins: bridge1v1.wins +
+            bridge2v2.wins +
+            bridge3v3.wins +
+            bridge4v4.wins +
+            bridge2v2v2v2.wins +
+            bridge3v3v3v3.wins +
+            bridgeCapture.wins,
+        losses: bridge1v1.losses +
+            bridge2v2.losses +
+            bridge3v3.losses +
+            bridge4v4.losses +
+            bridge2v2v2v2.losses +
+            bridge3v3v3v3.losses +
+            bridgeCapture.losses,
+        scores: bridge1v1.scores +
+            bridge2v2.scores +
+            bridge3v3.scores +
+            bridge4v4.scores +
+            bridge2v2v2v2.scores +
+            bridge3v3v3v3.scores +
+            bridgeCapture.scores,
       );
 }
 
@@ -312,4 +380,18 @@ class DuelsModeStats {
       _ => '',
     };
   }
+}
+
+class DuelsModeStatsBridge extends DuelsModeStats {
+  @override
+  final bool isOverall = false;
+
+  final int scores;
+  const DuelsModeStatsBridge({
+    super.kills = 0,
+    super.deaths = 0,
+    super.wins = 0,
+    super.losses = 0,
+    this.scores = 0,
+  });
 }

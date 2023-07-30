@@ -5,10 +5,14 @@ import 'minecraft_text.dart';
 class StatsTable extends StatefulWidget {
   final List<String> colNames;
   final Map<String, List<String>> rows;
+  final void Function(String selectedMode) onModeSeletion;
+
+  static void defaultFunction(dynamic) {}
 
   const StatsTable({
     required this.colNames,
     required this.rows,
+    this.onModeSeletion = defaultFunction,
     super.key,
   });
 
@@ -32,7 +36,7 @@ class _StatsTableState extends State<StatsTable> {
         const DataColumn(
           label: Text(''),
         ),
-        const DataColumn(label: Text('Overall')),
+        DataColumn(label: Text(widget.colNames[0])),
         DataColumn(
           label: Row(
             children: [
@@ -48,6 +52,7 @@ class _StatsTableState extends State<StatsTable> {
                     setState(() {
                       selectedModeIndex = selectedModeIndex == 1 ? widget.colNames.length - 1 : selectedModeIndex - 1;
                     });
+                    widget.onModeSeletion(widget.colNames[selectedModeIndex]);
                   },
                 ),
               ),
@@ -64,6 +69,7 @@ class _StatsTableState extends State<StatsTable> {
                     setState(() {
                       selectedModeIndex = selectedModeIndex == widget.colNames.length - 1 ? 1 : selectedModeIndex + 1;
                     });
+                    widget.onModeSeletion(widget.colNames[selectedModeIndex]);
                   },
                 ),
               ),
