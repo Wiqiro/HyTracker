@@ -31,6 +31,8 @@ class _StatsTableState extends State<StatsTable> {
       dataRowMaxHeight: 30,
       headingRowHeight: 50,
       columnSpacing: 30,
+      dataTextStyle: const TextStyle(fontSize: 14, color: Colors.black),
+      headingTextStyle: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),
       border: TableBorder.symmetric(inside: BorderSide.none),
       columns: [
         const DataColumn(

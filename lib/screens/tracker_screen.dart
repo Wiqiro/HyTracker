@@ -4,6 +4,7 @@ import 'package:hytracker/widgets/chrono.dart';
 
 import '../widgets/profile_options.dart';
 import '../models/session.dart';
+import '../widgets/stats_text.dart';
 
 class TrackerScreen extends StatefulWidget {
   final GameTypes gameType;
@@ -33,8 +34,12 @@ class _TrackerScreenState extends State<TrackerScreen> {
           SizedBox(width: 15),
         ],
       ),
-      body: Row(
-        children: [Chrono(session.startTime)],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Chrono(session.startTime),
+          const StatsText(data: {'Hi': 24})
+        ],
       ),
     );
   }

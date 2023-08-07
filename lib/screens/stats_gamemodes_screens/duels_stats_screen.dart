@@ -10,7 +10,7 @@ class DuelsStatsScreen extends StatefulWidget {
 
   const DuelsStatsScreen(this.player, {super.key});
 
-  Widget buildUhcTable() => StatsTable(
+  Widget _buildUhcTable() => StatsTable(
         colNames: const ['UHC', 'UHC 1v1', 'UHC 2v2', 'UHC 4v4'],
         rows: {
           'Wins': [
@@ -40,7 +40,7 @@ class DuelsStatsScreen extends StatefulWidget {
         },
       );
 
-  Widget buildOpTable() => StatsTable(
+  Widget _buildOpTable() => StatsTable(
         colNames: const ['OP', 'OP 1v1', 'OP 2v2'],
         rows: {
           'Wins': [
@@ -66,7 +66,7 @@ class DuelsStatsScreen extends StatefulWidget {
         },
       );
 
-  Widget buildSkywarsTable() => StatsTable(
+  Widget _buildSkywarsTable() => StatsTable(
         colNames: const ['Skywars', 'SW 1v1', 'SW 2v2'],
         rows: {
           'Wins': [
@@ -92,7 +92,7 @@ class DuelsStatsScreen extends StatefulWidget {
         },
       );
 
-  Widget buildMwTable() => StatsTable(
+  Widget _buildMwTable() => StatsTable(
         colNames: const ['Mega Walls', 'MW 1v1', 'MW 2v2'],
         rows: {
           'Wins': [
@@ -118,7 +118,7 @@ class DuelsStatsScreen extends StatefulWidget {
         },
       );
 
-  Widget buildBridgeTable() => StatsTable(
+  Widget _buildBridgeTable() => StatsTable(
         colNames: const [
           'Bridge',
           'Bridge 1v1',
@@ -343,10 +343,10 @@ class _DuelsStatsScreenState extends State<DuelsStatsScreen> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: switch (selectedMode) {
-              'UHC' => widget.buildUhcTable(),
-              'OP' => widget.buildOpTable(),
-              'Skywars' => widget.buildSkywarsTable(),
-              'Bridge' => widget.buildBridgeTable(),
+              'UHC' => widget._buildUhcTable(),
+              'OP' => widget._buildOpTable(),
+              'Skywars' => widget._buildSkywarsTable(),
+              'Bridge' => widget._buildBridgeTable(),
               _ => null,
             },
           )
