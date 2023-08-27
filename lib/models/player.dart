@@ -33,7 +33,7 @@ class Player {
     duelsStats = DuelsStats.fromRawData(data['player']['stats']['Duels']);
   }
 
-  //Level formuma from https://hypixel.net/threads/guide-network-level-equations.3412241
+  //Level formula from https://hypixel.net/threads/guide-network-level-equations.3412241
   double get level => sqrt(experience / 1250 + 12.25) - 2.5;
 
   String _formattedUsername(Map<String, dynamic> data) {

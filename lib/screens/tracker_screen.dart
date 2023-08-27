@@ -20,7 +20,7 @@ class _TrackerScreenState extends State<TrackerScreen> {
 
   @override
   void initState() {
-    session = Session(gameType: widget.gameType);
+    session = Session();
     super.initState();
   }
 
