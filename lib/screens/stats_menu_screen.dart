@@ -7,7 +7,7 @@ import 'stats_gamemodes_screens/bedwars_stats_screen.dart';
 import 'stats_gamemodes_screens/skywars_stats_screen.dart';
 import 'stats_gamemodes_screens/duels_stats_screen.dart';
 import '../models/player.dart';
-import '../utils/hypixel_api_wrapper.dart';
+import '../utils/hypixel_api_wrapper.dart' as wrapper;
 import '../widgets/minecraft_text.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/gamemode_card.dart';
@@ -32,11 +32,11 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
     );
 
     try {
-      Map<String, dynamic> newPlayerUuidData = await HttpRequests().getUuidFromUsername(input);
+      Map<String, dynamic> newPlayerUuidData = await wrapper.getUuidFromUsername(input);
 
       if (!mounted) return;
 
-      Map<String, dynamic> newPlayerData = await HttpRequests().getHypixelPlayerData(
+      Map<String, dynamic> newPlayerData = await wrapper.getHypixelPlayerData(
         Provider.of<UserProvider>(context, listen: false).apiKey,
         newPlayerUuidData['id'],
       );
@@ -78,10 +78,10 @@ class _StatsMenuScreenState extends State<StatsMenuScreen> {
           SizedBox(width: 15),
         ],
       ),
-      body: Container(
-        alignment: Alignment.topCenter,
-        padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.topCenter,
+          padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
           child: Column(
             children: [
               MinecraftText(widget.player.formattedUsername, fontSize: 20, fontFamily: 'Minecraftia'),

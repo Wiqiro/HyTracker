@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/models/player.dart';
 import 'package:hytracker/providers/user.dart';
-import 'package:hytracker/utils/hypixel_api_wrapper.dart';
+import 'package:hytracker/utils/hypixel_api_wrapper.dart' as wrapper;
 import 'package:provider/provider.dart';
 
 import 'stat_record.dart';
@@ -16,8 +16,5 @@ class Session {
   StatRecord? firstRecord;
   StatRecord? lastRecord;
 
-  Future<void> refresh(BuildContext context) async {
-    var data = await HttpRequests()
-        .getHypixelPlayerData(Provider.of<UserProvider>(context).apiKey, Provider.of<UserProvider>(context).uuid);
-  }
+  Future<void> refresh(BuildContext context) async {}
 }

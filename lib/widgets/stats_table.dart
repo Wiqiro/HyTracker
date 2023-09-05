@@ -5,14 +5,14 @@ import 'minecraft_text.dart';
 class StatsTable extends StatefulWidget {
   final List<String> colNames;
   final Map<String, List<String>> rows;
-  final void Function(String selectedMode) onModeSeletion;
+  final void Function(String selectedMode) onModeSelection;
 
   static void defaultFunction(dynamic) {}
 
   const StatsTable({
     required this.colNames,
     required this.rows,
-    this.onModeSeletion = defaultFunction,
+    this.onModeSelection = defaultFunction,
     super.key,
   });
 
@@ -26,7 +26,7 @@ class _StatsTableState extends State<StatsTable> {
   @override
   Widget build(BuildContext context) {
     return DataTable(
-      dividerThickness: 0.1,
+      dividerThickness: 0.05,
       dataRowMinHeight: 20,
       dataRowMaxHeight: 30,
       headingRowHeight: 50,
@@ -42,53 +42,38 @@ class _StatsTableState extends State<StatsTable> {
         DataColumn(
           label: Row(
             children: [
-              SizedBox(
-                width: 30,
-                height: 30,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_rounded,
-                    size: 15,
-                  ),
-                  onPressed: () {
+              DropdownButton(
+                items: widget.colNames.skip(1).map((String name) {
+                  return DropdownMenuItem<String>(
+                    value: name,
+                    child: Text(name),
+                  );
+                }).toList(),
+                onChanged: ((value) {
+                  if (value != null) {
+                    widget.onModeSelection(value);
                     setState(() {
-                      selectedModeIndex = selectedModeIndex == 1 ? widget.colNames.length - 1 : selectedModeIndex - 1;
+                      selectedModeIndex = widget.colNames.indexOf(value);
                     });
-                    widget.onModeSeletion(widget.colNames[selectedModeIndex]);
-                  },
-                ),
-              ),
-              Text('  ${widget.colNames[selectedModeIndex]}  '),
-              SizedBox(
-                width: 30,
-                height: 30,
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 15,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      selectedModeIndex = selectedModeIndex == widget.colNames.length - 1 ? 1 : selectedModeIndex + 1;
-                    });
-                    widget.onModeSeletion(widget.colNames[selectedModeIndex]);
-                  },
-                ),
-              ),
+                  }
+                }),
+                value: widget.colNames[selectedModeIndex],
+                style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500),
+                underline: Container(),
+              )
             ],
           ),
         ),
       ],
-      rows: //[
-          widget.rows.entries
-              .map(
-                (entry) => DataRow(cells: [
-                  DataCell(Text(entry.key)),
-                  DataCell(MinecraftText(entry.value[0])),
-                  DataCell(MinecraftText(entry.value[selectedModeIndex])),
-                ]),
-              )
-              .toList(),
+      rows: widget.rows.entries
+          .map(
+            (entry) => DataRow(cells: [
+              DataCell(Text(entry.key)),
+              DataCell(MinecraftText(entry.value[0])),
+              DataCell(MinecraftText(entry.value[selectedModeIndex])),
+            ]),
+          )
+          .toList(),
     );
   }
 }

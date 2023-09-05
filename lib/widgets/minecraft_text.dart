@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hytracker/utils/color_converter.dart';
+import 'package:hytracker/utils/color_converter.dart' as color_converter;
 
 class MinecraftText extends StatelessWidget {
   final String text;
@@ -29,9 +29,8 @@ class MinecraftText extends StatelessWidget {
                 var match = e.group(0);
                 return TextSpan(
                   text: match?.replaceAll(RegExp(r'§.'), ''),
-                  //TODO: maybe nest to handle other styles
                   style: TextStyle(
-                    color: ColorConverter().mcCodeToColor(match!.substring(0, 2)),
+                    color: color_converter.mcCodeToColor(match!.substring(0, 2)),
                   ),
                 );
               }).toList(),

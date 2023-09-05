@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hytracker/screens/navigation_screen.dart';
+import 'package:hytracker/screens/stats_menu_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';
-import '../utils/constants.dart';
 import '../widgets/edit_button.dart';
 import '../widgets/minecraft_text.dart';
 import '../widgets/main_button.dart';
@@ -131,7 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                           child: CustomSearchBar(
                             hint: ' API Key',
-                            callback: (input) => _apiKeyInputCallback(context, Constants.apiKey),
+                            callback: (input) => _apiKeyInputCallback(context, input),
+                            maxLength: 36,
                           ),
                         ),
                   const SizedBox(height: 20),

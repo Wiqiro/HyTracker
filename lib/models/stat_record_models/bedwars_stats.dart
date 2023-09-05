@@ -1,6 +1,4 @@
-import 'package:hytracker/models/stat_record.dart';
-
-class BedwarsStats extends StatRecord {
+class BedwarsStats {
   final int experience;
   final int coins;
 
@@ -18,7 +16,7 @@ class BedwarsStats extends StatRecord {
     this.doubles = const BedwarsModeStats(),
     this.threes = const BedwarsModeStats(),
     this.fours = const BedwarsModeStats(),
-  }) : super.fromRawData();
+  });
 
   BedwarsStats.fromRawData(Map<String, dynamic> data)
       : experience = data['Experience']?.toInt() ?? 0,
@@ -72,8 +70,7 @@ class BedwarsStats extends StatRecord {
           losses: data['four_four_losses_bedwars'] ?? 0,
           bedsBroken: data['four_four_beds_broken_bedwars'] ?? 0,
           bedsLost: data['four_four_beds_lost_bedwars'] ?? 0,
-        ),
-        super.fromRawData();
+        );
 
   double get level {
     int exp = experience.toInt();
@@ -156,18 +153,18 @@ class BedwarsModeStats {
   });
 
   double get kdRatio {
-    return kills / deaths;
+    return deaths == 0 ? kills.toDouble() : kills / deaths;
   }
 
   double get fkdRatio {
-    return finalKills / finalDeaths;
+    return finalDeaths == 0 ? finalKills.toDouble() : finalKills / finalDeaths;
   }
 
   double get wlRatio {
-    return wins / losses;
+    return losses == 0 ? wins.toDouble() : wins / losses;
   }
 
   double get bblRatio {
-    return bedsBroken / bedsLost;
+    return bedsLost == 0 ? bedsBroken.toDouble() : bedsBroken / bedsLost;
   }
 }

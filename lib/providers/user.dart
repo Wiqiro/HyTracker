@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/player.dart';
-import '../utils/hypixel_api_wrapper.dart';
+import '../utils/hypixel_api_wrapper.dart' as wrapper;
 
 class UserProvider with ChangeNotifier {
-  late String uuid;
+  late String _uuid;
   late String username;
   Uint8List? avatar;
 
@@ -21,11 +21,11 @@ class UserProvider with ChangeNotifier {
 
   Future<void> setMcUserData(String username) async {
     try {
-      final uuidData = await HttpRequests().getUuidFromUsername(username);
+      final uuidData = await wrapper.getUuidFromUsername(username);
 
-      avatar = await HttpRequests().getUserAvatar(uuidData['id']);
+      avatar = await wrapper.getUserAvatar(uuidData['id']);
       this.username = uuidData['name'];
-      uuid = uuidData['id'];
+      _uuid = uuidData['id'];
 
       isUuidSet = true;
       if (isApiSet) {
@@ -42,7 +42,7 @@ class UserProvider with ChangeNotifier {
       return;
     }
     try {
-      final data = await HttpRequests().getHypixelPlayerData(apiKey, uuid);
+      final data = await wrapper.getHypixelPlayerData(apiKey, _uuid);
 
       player = Player.fromRawData(username: username, data: data);
       this.apiKey = apiKey;
@@ -61,7 +61,7 @@ class UserProvider with ChangeNotifier {
     try {
       final preferences = await SharedPreferences.getInstance();
       final userData = json.encode({
-        'uuid': uuid,
+        'uuid': _uuid,
         'apiKey': apiKey,
       });
       preferences.setString('userData', userData);
@@ -95,16 +95,16 @@ class UserProvider with ChangeNotifier {
       }
       final userData = json.decode(preferences.getString('userData')!) as Map<String, dynamic>;
       if (userData.containsKey('uuid') && userData.containsKey('apiKey')) {
-        uuid = userData['uuid'];
+        _uuid = userData['uuid'];
         apiKey = userData['apiKey'];
       } else {
         throw 'No previous login';
       }
 
-      final data = await HttpRequests().getUsernameFromUuid(uuid);
+      final data = await wrapper.getUsernameFromUuid(_uuid);
       username = data['name'];
 
-      avatar = await HttpRequests().getUserAvatar(userData['uuid']);
+      avatar = await wrapper.getUserAvatar(userData['uuid']);
       isUuidSet = true;
 
       await setHypixelUserData(apiKey);

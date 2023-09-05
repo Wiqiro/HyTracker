@@ -1,6 +1,4 @@
-import 'package:hytracker/models/stat_record.dart';
-
-class DuelsStats extends StatRecord {
+class DuelsStats {
   final int coins;
   final String prefix;
   final DuelsModeStats overall;
@@ -61,7 +59,7 @@ class DuelsStats extends StatRecord {
     this.bridge2v2v2v2 = const DuelsModeStatsBridge(),
     this.bridge3v3v3v3 = const DuelsModeStatsBridge(),
     this.bridgeCapture = const DuelsModeStatsBridge(),
-  }) : super.fromRawData();
+  });
 
   DuelsStats.fromRawData(Map<String, dynamic> data)
       : coins = data['coins'] ?? 0,
@@ -150,7 +148,7 @@ class DuelsStats extends StatRecord {
           kills: data['bowspleef_duel_kills'] ?? 0,
           deaths: data['bowspleef_duel_deaths'] ?? 0,
           wins: data['bowspleef_duel_wins'] ?? 0,
-          losses: data['bowspleef_duel_losses'] ?? 0,
+          losses: data['bowspleef_dueTODO: maybe nest to handle other stylesl_losses'] ?? 0,
         ),
         classic = DuelsModeStats(
           kills: data['classic_duel_kills'] ?? 0,
@@ -235,8 +233,7 @@ class DuelsStats extends StatRecord {
           wins: data['capture_threes_wins'] ?? 0,
           losses: data['capture_threes_losses'] ?? 0,
           scores: data['captures '] ?? 0,
-        ),
-        super.fromRawData();
+        );
 
   DuelsModeStats get uhcOverall => DuelsModeStats(
         kills: uhcSolo.kills + uhcDoubles.kills + uhcFours.kills,
@@ -320,6 +317,14 @@ class DuelsModeStats {
     this.losses = 0,
     this.isOverall = false,
   });
+
+  double get wlRatio {
+    return losses == 0 ? wins.toDouble() : wins / losses;
+  }
+
+  double get kdRatio {
+    return deaths == 0 ? kills.toDouble() : kills / deaths;
+  }
 
   String _toRoman(int nb) {
     return switch (nb) {

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:hytracker/models/stat_record_models/bedwars_stats.dart';
 import 'package:hytracker/models/stat_record_models/duels_stats.dart';
 import 'package:hytracker/models/stat_record_models/skywars_stats.dart';
-import 'package:hytracker/utils/color_converter.dart';
+import 'package:hytracker/utils/color_converter.dart' as color_converter;
 
 class Player {
   final String username;
@@ -69,7 +69,7 @@ class Player {
           return '§b[MVP] $username';
         case 'MVP_PLUS':
           var plusColor = data['player'].containsKey('rankPlusColor')
-              ? ColorConverter().colorNameToCode(data['player']['rankPlusColor'])
+              ? color_converter.colorNameToCode(data['player']['rankPlusColor'])
               : '§c';
 
           if (data['player'].containsKey('monthlyPackageRank') && data['player']['monthlyPackageRank'] == 'SUPERSTAR') {

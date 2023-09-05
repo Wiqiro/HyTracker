@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class CustomSearchBar extends StatefulWidget {
   final String hint;
   final void Function(String input) callback;
+  final int maxLength;
 
   const CustomSearchBar({
     required this.hint,
     required this.callback,
+    this.maxLength = 16,
     super.key,
   });
 
@@ -40,7 +42,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
               _input = value;
             },
             onSubmitted: (value) => widget.callback(value.trim()),
-            maxLength: 16,
+            maxLength: widget.maxLength,
           ),
           GestureDetector(
             onTap: () {

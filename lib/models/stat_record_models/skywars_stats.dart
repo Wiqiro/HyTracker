@@ -1,6 +1,4 @@
-import 'package:hytracker/models/stat_record.dart';
-
-class SkywarsStats extends StatRecord {
+class SkywarsStats {
   final int experience;
   final String _icon;
 
@@ -27,8 +25,7 @@ class SkywarsStats extends StatRecord {
     this.teamNormal = const SkywarsModeStats(),
     this.teamInsane = const SkywarsModeStats(),
     String icon = '⋆',
-  })  : _icon = icon,
-        super.fromRawData();
+  }) : _icon = icon;
 
   SkywarsStats.fromRawData(Map<String, dynamic> data)
       : experience = data['skywars_experience'].toInt() ?? 0,
@@ -109,12 +106,11 @@ class SkywarsStats extends StatRecord {
           losses: data['losses_team_normal'] ?? 0,
         ),
         teamInsane = SkywarsModeStats(
-          kills: data['kills'] ?? 0,
-          deaths: data['deaths'] ?? 0,
-          wins: data['wins'] ?? 0,
-          losses: data['losses'] ?? 0,
-        ),
-        super.fromRawData();
+          kills: data['kills_team_insane'] ?? 0,
+          deaths: data['deaths_team_insane'] ?? 0,
+          wins: data['wins_team_insane'] ?? 0,
+          losses: data['losses_team_insane'] ?? 0,
+        );
 
   String get prefix {
     var lvlStr = level.toInt().toString();
