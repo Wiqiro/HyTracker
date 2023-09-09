@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hytracker/screens/navigation_screen.dart';
-import 'package:hytracker/screens/stats_menu_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.dart';

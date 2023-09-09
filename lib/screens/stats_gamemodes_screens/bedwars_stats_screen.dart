@@ -142,6 +142,7 @@ class BedwarsStatsScreen extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(height: 80),
           ],
         ),
       ),

@@ -444,7 +444,7 @@ class _DuelsStatsScreenState extends State<DuelsStatsScreen> {
             ),
             const SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 40,
             ),
             Container(
               width: double.infinity,
@@ -457,7 +457,8 @@ class _DuelsStatsScreenState extends State<DuelsStatsScreen> {
                 'Mega Walls' => widget._buildMwTable(),
                 _ => null,
               },
-            )
+            ),
+            const SizedBox(height: 80),
           ],
         ),
       ),

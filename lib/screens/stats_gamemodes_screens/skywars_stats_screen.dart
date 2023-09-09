@@ -91,6 +91,7 @@ class SkywarsStatsScreen extends StatelessWidget {
                 },
               ),
             ),
+            const SizedBox(height: 80),
           ],
         ),
       ),

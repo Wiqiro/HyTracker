@@ -355,7 +355,7 @@ class DuelsModeStats {
   String get formattedTitle {
     int eqWins = isOverall ? wins : wins * 2;
     return switch (eqWins) {
-      < 100 => '',
+      < 100 => '-',
       < 200 => '§8Rookie ${_toRoman((eqWins - 100) ~/ 20)}',
       < 500 => '§fIron ${_toRoman((eqWins - 200) ~/ 60)}',
       < 1000 => '§6Gold ${_toRoman((eqWins - 500) ~/ 100)}',
@@ -367,7 +367,7 @@ class DuelsModeStats {
       < 100000 => '§bCelestial ${_toRoman((eqWins - 50000) ~/ 10000)}',
       < 200000 => '§dDivine ${_toRoman((eqWins - 100000) ~/ 20000)}',
       >= 200000 => '§cAscended ${_toRoman((eqWins - 200000) ~/ 20000)}',
-      _ => '',
+      _ => '-',
     };
   }
 }
