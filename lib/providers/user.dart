@@ -8,7 +8,7 @@ import '../models/player.dart';
 import '../utils/hypixel_api_wrapper.dart' as wrapper;
 
 class UserProvider with ChangeNotifier {
-  late String _uuid;
+  late String uuid;
   late String username;
   Uint8List? avatar;
 
@@ -25,7 +25,7 @@ class UserProvider with ChangeNotifier {
 
       avatar = await wrapper.getUserAvatar(uuidData['id']);
       this.username = uuidData['name'];
-      _uuid = uuidData['id'];
+      uuid = uuidData['id'];
 
       isUuidSet = true;
       if (isApiSet) {
@@ -42,7 +42,7 @@ class UserProvider with ChangeNotifier {
       return;
     }
     try {
-      final data = await wrapper.getHypixelPlayerData(apiKey, _uuid);
+      final data = await wrapper.getHypixelPlayerData(apiKey, uuid);
 
       player = Player.fromRawData(username: username, data: data);
       this.apiKey = apiKey;
@@ -61,7 +61,7 @@ class UserProvider with ChangeNotifier {
     try {
       final preferences = await SharedPreferences.getInstance();
       final userData = json.encode({
-        'uuid': _uuid,
+        'uuid': uuid,
         'apiKey': apiKey,
       });
       preferences.setString('userData', userData);
@@ -95,13 +95,13 @@ class UserProvider with ChangeNotifier {
       }
       final userData = json.decode(preferences.getString('userData')!) as Map<String, dynamic>;
       if (userData.containsKey('uuid') && userData.containsKey('apiKey')) {
-        _uuid = userData['uuid'];
+        uuid = userData['uuid'];
         apiKey = userData['apiKey'];
       } else {
         throw 'No previous login';
       }
 
-      final data = await wrapper.getUsernameFromUuid(_uuid);
+      final data = await wrapper.getUsernameFromUuid(uuid);
       username = data['name'];
 
       avatar = await wrapper.getUserAvatar(userData['uuid']);

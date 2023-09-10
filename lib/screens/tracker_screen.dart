@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hytracker/utils/game_types.dart';
 import 'package:hytracker/widgets/chrono.dart';
@@ -17,11 +19,21 @@ class TrackerScreen extends StatefulWidget {
 
 class _TrackerScreenState extends State<TrackerScreen> {
   late Session session;
+  late Timer refresher;
 
   @override
   void initState() {
     session = Session();
+    refresher = Timer.periodic(Duration(seconds: 5), (_) {
+      session.refresh(context).then((_) => {setState(() {})});
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    refresher.cancel();
+    super.dispose();
   }
 
   @override
@@ -38,7 +50,12 @@ class _TrackerScreenState extends State<TrackerScreen> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Chrono(session.startTime),
-          const StatsText(data: {'Hi': 24})
+          ...session.records.isEmpty
+              ? []
+              : [
+                  StatsText(data: {'Duel Wins': session.records.last.duelsStats.overall.wins}),
+                  StatsText(data: {'Duel Deaths': session.records.last.duelsStats.overall.losses}),
+                ]
         ],
       ),
     );

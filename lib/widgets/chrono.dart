@@ -15,9 +15,11 @@ class _ChronoState extends State<Chrono> {
   int _minutes = 0;
   int _seconds = 0;
 
+  late Timer timer;
+
   @override
   void initState() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _seconds++;
         if (_seconds >= 60) {
@@ -32,6 +34,12 @@ class _ChronoState extends State<Chrono> {
       });
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
