@@ -13,4 +13,8 @@ class SessionsProvider with ChangeNotifier {
     _sessions.add(session);
     notifyListeners();
   }
+
+  void loadSavedSessions() {}
+
+  void saveSessions() {}
 }

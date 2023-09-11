@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hytracker/providers/sessions.dart';
 import 'package:hytracker/providers/user.dart';
 import 'package:hytracker/screens/login_screen.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SessionsProvider(),
+        ),
       ],
       child: Consumer<UserProvider>(
         builder: (ctx, user, _) => MaterialApp(

@@ -15,7 +15,6 @@ class Session {
   }
 
   Future<void> refresh(BuildContext context) async {
-    print("hi");
     try {
       var data = await wrapper.getHypixelPlayerData(
         Provider.of<UserProvider>(context, listen: false).apiKey,

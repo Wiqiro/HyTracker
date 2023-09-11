@@ -22,7 +22,7 @@ class TrackerSettingScreen extends StatelessWidget {
         child: MainButton(
           text: 'Start',
           callback: () {
-            Navigator.of(context).push(
+            Navigator.of(context).pushReplacement(
               MaterialPageRoute(
                 builder: (context) => const TrackerScreen(GameTypes.bedwars),
               ),
