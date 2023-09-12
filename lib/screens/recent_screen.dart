@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hytracker/providers/sessions.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/profile_options.dart';
 
@@ -15,6 +17,11 @@ class RecentScreen extends StatelessWidget {
           SizedBox(width: 15),
         ],
       ),
+      body: Column(
+          children: Provider.of<SessionsProvider>(context)
+              .sessions
+              .map((e) => Text('Session from ${e.startTime} to ${e.endTime}'))
+              .toList()),
     );
   }
 }

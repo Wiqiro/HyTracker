@@ -13,7 +13,7 @@ class SkywarsStats {
   final SkywarsModeStats teamNormal;
   final SkywarsModeStats teamInsane;
 
-  SkywarsStats({
+  const SkywarsStats({
     this.experience = 0,
     this.opals = 0,
     this.shards = 0,
@@ -169,6 +169,38 @@ class SkywarsStats {
       _ => 12 + (experience - 15000) / 10000,
     };
   }
+
+  factory SkywarsStats.fromJson(Map<String, dynamic> json) {
+    return SkywarsStats(
+      experience: json['experience'] ?? 0,
+      opals: json['opals'] ?? 0,
+      shards: json['shards'] ?? 0,
+      angelOfDeath: json['angel_of_death_level'] ?? 0,
+      coins: json['coins'] ?? 0,
+      overall: SkywarsModeStats.fromJson(json['overall'] ?? {}),
+      soloNormal: SkywarsModeStats.fromJson(json['solo_normal'] ?? {}),
+      soloInsane: SkywarsModeStats.fromJson(json['solo_insane'] ?? {}),
+      teamNormal: SkywarsModeStats.fromJson(json['team_normal'] ?? {}),
+      teamInsane: SkywarsModeStats.fromJson(json['team_insane'] ?? {}),
+      icon: json['icon'] ?? '⋆',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'experience': experience,
+      'opals': opals,
+      'shards': shards,
+      'angel_of_death_level': angelOfDeath,
+      'coins': coins,
+      'overall': overall.toJson(),
+      'solo_normal': soloNormal.toJson(),
+      'solo_insane': soloInsane.toJson(),
+      'team_normal': teamNormal.toJson(),
+      'team_insane': teamInsane.toJson(),
+      'icon': _icon,
+    };
+  }
 }
 
 class SkywarsModeStats {
@@ -184,6 +216,24 @@ class SkywarsModeStats {
     this.wins = 0,
     this.losses = 0,
   });
+
+  factory SkywarsModeStats.fromJson(Map<String, dynamic> json) {
+    return SkywarsModeStats(
+      kills: json['kills'] ?? 0,
+      deaths: json['deaths'] ?? 0,
+      wins: json['wins'] ?? 0,
+      losses: json['losses'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'kills': kills,
+      'deaths': deaths,
+      'wins': wins,
+      'losses': losses,
+    };
+  }
 
   double get kdRatio {
     return kills / deaths;

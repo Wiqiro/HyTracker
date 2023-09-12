@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hytracker/providers/sessions.dart';
 import 'package:hytracker/screens/navigation_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -56,11 +57,12 @@ class _LoginScreenState extends State<LoginScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => showDialog(
         context: context,
-        builder: (context) {
+        builder: (_) {
           return const Center(child: CircularProgressIndicator());
         },
       ),
     );
+    Provider.of<SessionsProvider>(context, listen: false).loadSavedSessions();
     Provider.of<UserProvider>(context, listen: false).tryAutoLogin().then((value) {
       Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(

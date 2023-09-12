@@ -8,7 +8,7 @@ class BedwarsStats {
   final BedwarsModeStats threes;
   final BedwarsModeStats fours;
 
-  BedwarsStats({
+  const BedwarsStats({
     this.experience = 500,
     this.coins = 0,
     this.overall = const BedwarsModeStats(),
@@ -124,6 +124,32 @@ class BedwarsStats {
       _ => '§7[$raw✫]'
     };
   }
+
+  // Create a factory constructor to create a BedwarsStats object from JSON
+  factory BedwarsStats.fromJson(Map<String, dynamic> json) {
+    return BedwarsStats(
+      experience: json['experience'] ?? 500,
+      coins: json['coins'] ?? 0,
+      overall: BedwarsModeStats.fromJson(json['overall']),
+      solo: BedwarsModeStats.fromJson(json['solo']),
+      doubles: BedwarsModeStats.fromJson(json['doubles']),
+      threes: BedwarsModeStats.fromJson(json['threes']),
+      fours: BedwarsModeStats.fromJson(json['fours']),
+    );
+  }
+
+  // Create a method to convert the BedwarsStats object to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'experience': experience,
+      'coins': coins,
+      'overall': overall.toJson(),
+      'solo': solo.toJson(),
+      'doubles': doubles.toJson(),
+      'threes': threes.toJson(),
+      'fours': fours.toJson(),
+    };
+  }
 }
 
 class BedwarsModeStats {
@@ -151,6 +177,34 @@ class BedwarsModeStats {
     this.bedsBroken = 0,
     this.bedsLost = 0,
   });
+
+  factory BedwarsModeStats.fromJson(Map<String, dynamic> json) {
+    return BedwarsModeStats(
+      kills: json['kills'] ?? 0,
+      deaths: json['deaths'] ?? 0,
+      finalKills: json['finalKills'] ?? 0,
+      finalDeaths: json['finalDeaths'] ?? 0,
+      wins: json['wins'] ?? 0,
+      losses: json['losses'] ?? 0,
+      winstreak: json['winstreak'] ?? 0,
+      bedsBroken: json['bedsBroken'] ?? 0,
+      bedsLost: json['bedsLost'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'kills': kills,
+      'deaths': deaths,
+      'finalKills': finalKills,
+      'finalDeaths': finalDeaths,
+      'wins': wins,
+      'losses': losses,
+      'winstreak': winstreak,
+      'bedsBroken': bedsBroken,
+      'bedsLost': bedsLost,
+    };
+  }
 
   double get kdRatio {
     return deaths == 0 ? kills.toDouble() : kills / deaths;

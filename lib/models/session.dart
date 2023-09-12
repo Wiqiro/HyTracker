@@ -14,6 +14,8 @@ class Session {
     return [..._records];
   }
 
+  Session();
+
   Future<void> refresh(BuildContext context) async {
     try {
       var data = await wrapper.getHypixelPlayerData(
@@ -26,6 +28,21 @@ class Session {
     } catch (error) {
       rethrow;
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime?.toIso8601String(),
+      'records': _records.map((player) => player.toJson()).toList(),
+    };
+  }
+
+  factory Session.fromJson(Map<String, dynamic> json) {
+    final session = Session();
+    session.endTime = json['endTime'] != null ? DateTime.parse(json['endTime']) : null;
+    session._records = (json['records'] as List<dynamic>).map((recordJson) => Player.fromJson(recordJson)).toList();
+    return session;
   }
 
   void end() {

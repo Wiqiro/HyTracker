@@ -29,7 +29,7 @@ class DuelsStats {
   final DuelsModeStatsBridge bridge3v3v3v3;
   final DuelsModeStatsBridge bridgeCapture;
 
-  DuelsStats({
+  const DuelsStats({
     this.coins = 0,
     this.prefix = '',
     this.overall = const DuelsModeStats(),
@@ -234,6 +234,75 @@ class DuelsStats {
           losses: data['capture_threes_losses'] ?? 0,
           scores: data['captures '] ?? 0,
         );
+  // Serialization: Convert DuelsStats to JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'coins': coins,
+      'prefix': prefix,
+      'overall': overall.toJson(),
+      'uhcSolo': uhcSolo.toJson(),
+      'uhcDoubles': uhcDoubles.toJson(),
+      'uhcFours': uhcFours.toJson(),
+      'opSolo': opSolo.toJson(),
+      'opDoubles': opDoubles.toJson(),
+      'skywarsSolo': skywarsSolo.toJson(),
+      'skywarsDoubles': skywarsDoubles.toJson(),
+      'megaWallsSolo': megaWallsSolo.toJson(),
+      'megaWallsDoubles': megaWallsDoubles.toJson(),
+      'bow': bow.toJson(),
+      'blitz': blitz.toJson(),
+      'sumo': sumo.toJson(),
+      'bowspleef': bowspleef.toJson(),
+      'classic': classic.toJson(),
+      'noDebuff': noDebuff.toJson(),
+      'combo': combo.toJson(),
+      'boxing': boxing.toJson(),
+      'parkour': parkour.toJson(),
+      'duelArena': duelArena.toJson(),
+      'bridge1v1': bridge1v1.toJson(),
+      'bridge2v2': bridge2v2.toJson(),
+      'bridge3v3': bridge3v3.toJson(),
+      'bridge4v4': bridge4v4.toJson(),
+      'bridge2v2v2v2': bridge2v2v2v2.toJson(),
+      'bridge3v3v3v3': bridge3v3v3v3.toJson(),
+      'bridgeCapture': bridgeCapture.toJson(),
+    };
+  }
+
+  // Deserialization: Create DuelsStats from JSON
+  factory DuelsStats.fromJson(Map<String, dynamic> json) {
+    return DuelsStats(
+      coins: json['coins'],
+      prefix: json['prefix'],
+      overall: DuelsModeStats.fromJson(json['overall']),
+      uhcSolo: DuelsModeStats.fromJson(json['uhcSolo']),
+      uhcDoubles: DuelsModeStats.fromJson(json['uhcDoubles']),
+      uhcFours: DuelsModeStats.fromJson(json['uhcFours']),
+      opSolo: DuelsModeStats.fromJson(json['opSolo']),
+      opDoubles: DuelsModeStats.fromJson(json['opDoubles']),
+      skywarsSolo: DuelsModeStats.fromJson(json['skywarsSolo']),
+      skywarsDoubles: DuelsModeStats.fromJson(json['skywarsDoubles']),
+      megaWallsSolo: DuelsModeStats.fromJson(json['megaWallsSolo']),
+      megaWallsDoubles: DuelsModeStats.fromJson(json['megaWallsDoubles']),
+      bow: DuelsModeStats.fromJson(json['bow']),
+      blitz: DuelsModeStats.fromJson(json['blitz']),
+      sumo: DuelsModeStats.fromJson(json['sumo']),
+      bowspleef: DuelsModeStats.fromJson(json['bowspleef']),
+      classic: DuelsModeStats.fromJson(json['classic']),
+      noDebuff: DuelsModeStats.fromJson(json['noDebuff']),
+      combo: DuelsModeStats.fromJson(json['combo']),
+      boxing: DuelsModeStats.fromJson(json['boxing']),
+      parkour: DuelsModeStats.fromJson(json['parkour']),
+      duelArena: DuelsModeStats.fromJson(json['duelArena']),
+      bridge1v1: DuelsModeStatsBridge.fromJson(json['bridge1v1']),
+      bridge2v2: DuelsModeStatsBridge.fromJson(json['bridge2v2']),
+      bridge3v3: DuelsModeStatsBridge.fromJson(json['bridge3v3']),
+      bridge4v4: DuelsModeStatsBridge.fromJson(json['bridge4v4']),
+      bridge2v2v2v2: DuelsModeStatsBridge.fromJson(json['bridge2v2v2v2']),
+      bridge3v3v3v3: DuelsModeStatsBridge.fromJson(json['bridge3v3v3v3']),
+      bridgeCapture: DuelsModeStatsBridge.fromJson(json['bridgeCapture']),
+    );
+  }
 
   DuelsModeStats get uhcOverall => DuelsModeStats(
         kills: uhcSolo.kills + uhcDoubles.kills + uhcFours.kills,
@@ -370,6 +439,26 @@ class DuelsModeStats {
       _ => '-',
     };
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'isOverall': isOverall,
+      'kills': kills,
+      'deaths': deaths,
+      'wins': wins,
+      'losses': losses,
+    };
+  }
+
+  factory DuelsModeStats.fromJson(Map<String, dynamic> json) {
+    return DuelsModeStats(
+      isOverall: json['isOverall'] ?? false,
+      kills: json['kills'] ?? 0,
+      deaths: json['deaths'] ?? 0,
+      wins: json['wins'] ?? 0,
+      losses: json['losses'] ?? 0,
+    );
+  }
 }
 
 class DuelsModeStatsBridge extends DuelsModeStats {
@@ -384,4 +473,25 @@ class DuelsModeStatsBridge extends DuelsModeStats {
     super.losses = 0,
     this.scores = 0,
   });
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'kills': kills,
+      'deaths': deaths,
+      'wins': wins,
+      'losses': losses,
+      'scores': scores,
+    };
+  }
+
+  factory DuelsModeStatsBridge.fromJson(Map<String, dynamic> json) {
+    return DuelsModeStatsBridge(
+      kills: json['kills'] ?? 0,
+      deaths: json['deaths'] ?? 0,
+      wins: json['wins'] ?? 0,
+      losses: json['losses'] ?? 0,
+      scores: json['scores'] ?? 0,
+    );
+  }
 }

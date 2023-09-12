@@ -11,7 +11,6 @@ class Player {
 
   //late final double networkLvl;
   late final int experience;
-  late final double coinMultiplier;
   late final int karma;
 
   late final int quests;
@@ -22,11 +21,28 @@ class Player {
   late final SkywarsStats skywarsStats;
   late final DuelsStats duelsStats;
 
+  Player({
+    required this.username,
+    required this.formattedUsername,
+    this.experience = 0,
+    this.karma = 1,
+    this.quests = 0,
+    this.challenges = 0,
+    this.achievementPoints = 0,
+    this.bedwarsStats = const BedwarsStats(),
+    this.skywarsStats = const SkywarsStats(),
+    this.duelsStats = const DuelsStats(),
+  });
+
   Player.fromRawData({required this.username, required Map<String, dynamic> data}) {
     formattedUsername = _formattedUsername(data);
 
     experience = data['player'].containsKey('networkExp') ? data['player']['networkExp'].toInt() : 0;
     karma = data['player'].containsKey('karma') ? data['player']['karma'] : 0;
+
+    quests = 0;
+    challenges = 0;
+    achievementPoints = 0;
 
     bedwarsStats = BedwarsStats.fromRawData(data['player']['stats']['Bedwars']);
     skywarsStats = SkywarsStats.fromRawData(data['player']['stats']['SkyWars']);
@@ -82,5 +98,35 @@ class Player {
       }
     }
     return '§7$username';
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'username': username,
+      'formattedUsername': formattedUsername,
+      'experience': experience,
+      'karma': karma,
+      'quests': quests,
+      'challenges': challenges,
+      'achievementPoints': achievementPoints,
+      'bedwarsStats': bedwarsStats.toJson(),
+      'skywarsStats': skywarsStats.toJson(),
+      'duelsStats': duelsStats.toJson(),
+    };
+  }
+
+  factory Player.fromJson(Map<String, dynamic> json) {
+    return Player(
+      username: json['username'],
+      formattedUsername: json['formattedUsername'],
+      experience: json['experience'],
+      karma: json['karma'],
+      quests: json['quests'],
+      challenges: json['challenges'],
+      achievementPoints: json['achievementPoints'],
+      bedwarsStats: BedwarsStats.fromJson(json['bedwarsStats']),
+      skywarsStats: SkywarsStats.fromJson(json['skywarsStats']),
+      duelsStats: DuelsStats.fromJson(json['duelsStats']),
+    );
   }
 }
