@@ -18,59 +18,86 @@ class BedwarsStats {
     this.fours = const BedwarsModeStats(),
   });
 
-  BedwarsStats.fromRawData(Map<String, dynamic> data)
-      : experience = data['Experience']?.toInt() ?? 0,
-        coins = data['coins'] ?? 0,
-        overall = BedwarsModeStats(
-          kills: data['kills_bedwars'] ?? 0,
-          deaths: data['deaths_bedwars'] ?? 0,
-          finalKills: data['final_kills_bedwars'] ?? 0,
-          finalDeaths: data['final_deaths_bedwars'] ?? 0,
-          wins: data['wins_bedwars'] ?? 0,
-          losses: data['losses_bedwars'] ?? 0,
-          bedsBroken: data['beds_broken_bedwars'] ?? 0,
-          bedsLost: data['beds_lost_bedwars'] ?? 0,
-        ),
-        solo = BedwarsModeStats(
-          kills: data['eight_one_kills_bedwars'] ?? 0,
-          deaths: data['eight_one_deaths_bedwars'] ?? 0,
-          finalKills: data['eight_one_final_kills_bedwars'] ?? 0,
-          finalDeaths: data['eight_one_final_deaths_bedwars'] ?? 0,
-          wins: data['eight_one_wins_bedwars'] ?? 0,
-          losses: data['eight_one_losses_bedwars'] ?? 0,
-          bedsBroken: data['eight_one_beds_broken_bedwars'] ?? 0,
-          bedsLost: data['eight_one_beds_lost_bedwars'] ?? 0,
-        ),
-        doubles = BedwarsModeStats(
-          kills: data['eight_two_kills_bedwars'] ?? 0,
-          deaths: data['eight_two_deaths_bedwars'] ?? 0,
-          finalKills: data['eight_two_final_kills_bedwars'] ?? 0,
-          finalDeaths: data['eight_two_final_deaths_bedwars'] ?? 0,
-          wins: data['eight_two_wins_bedwars'] ?? 0,
-          losses: data['eight_two_losses_bedwars'] ?? 0,
-          bedsBroken: data['eight_two_beds_broken_bedwars'] ?? 0,
-          bedsLost: data['eight_two_beds_lost_bedwars'] ?? 0,
-        ),
-        threes = BedwarsModeStats(
-          kills: data['four_three_kills_bedwars'] ?? 0,
-          deaths: data['four_three_deaths_bedwars'] ?? 0,
-          finalKills: data['four_three_final_kills_bedwars'] ?? 0,
-          finalDeaths: data['four_three_final_deaths_bedwars'] ?? 0,
-          wins: data['four_three_wins_bedwars'] ?? 0,
-          losses: data['four_three_losses_bedwars'] ?? 0,
-          bedsBroken: data['four_three_beds_broken_bedwars'] ?? 0,
-          bedsLost: data['four_three_beds_lost_bedwars'] ?? 0,
-        ),
-        fours = BedwarsModeStats(
-          kills: data['four_four_kills_bedwars'] ?? 0,
-          deaths: data['four_four_deaths_bedwars'] ?? 0,
-          finalKills: data['four_four_final_kills_bedwars'] ?? 0,
-          finalDeaths: data['four_four_final_deaths_bedwars'] ?? 0,
-          wins: data['four_four_wins_bedwars'] ?? 0,
-          losses: data['four_four_losses_bedwars'] ?? 0,
-          bedsBroken: data['four_four_beds_broken_bedwars'] ?? 0,
-          bedsLost: data['four_four_beds_lost_bedwars'] ?? 0,
-        );
+  factory BedwarsStats.fromRawData(Map<String, dynamic> data) {
+    return BedwarsStats(
+      experience: data['Experience']?.toInt() ?? 500,
+      coins: data['coins'] ?? 0,
+      overall: BedwarsModeStats(
+        kills: data['kills_bedwars'] ?? 0,
+        deaths: data['deaths_bedwars'] ?? 0,
+        finalKills: data['final_kills_bedwars'] ?? 0,
+        finalDeaths: data['final_deaths_bedwars'] ?? 0,
+        wins: data['wins_bedwars'] ?? 0,
+        losses: data['losses_bedwars'] ?? 0,
+        bedsBroken: data['beds_broken_bedwars'] ?? 0,
+        bedsLost: data['beds_lost_bedwars'] ?? 0,
+      ),
+      solo: BedwarsModeStats(
+        kills: data['eight_one_kills_bedwars'] ?? 0,
+        deaths: data['eight_one_deaths_bedwars'] ?? 0,
+        finalKills: data['eight_one_final_kills_bedwars'] ?? 0,
+        finalDeaths: data['eight_one_final_deaths_bedwars'] ?? 0,
+        wins: data['eight_one_wins_bedwars'] ?? 0,
+        losses: data['eight_one_losses_bedwars'] ?? 0,
+        bedsBroken: data['eight_one_beds_broken_bedwars'] ?? 0,
+        bedsLost: data['eight_one_beds_lost_bedwars'] ?? 0,
+      ),
+      doubles: BedwarsModeStats(
+        kills: data['eight_two_kills_bedwars'] ?? 0,
+        deaths: data['eight_two_deaths_bedwars'] ?? 0,
+        finalKills: data['eight_two_final_kills_bedwars'] ?? 0,
+        finalDeaths: data['eight_two_final_deaths_bedwars'] ?? 0,
+        wins: data['eight_two_wins_bedwars'] ?? 0,
+        losses: data['eight_two_losses_bedwars'] ?? 0,
+        bedsBroken: data['eight_two_beds_broken_bedwars'] ?? 0,
+        bedsLost: data['eight_two_beds_lost_bedwars'] ?? 0,
+      ),
+      threes: BedwarsModeStats(
+        kills: data['four_three_kills_bedwars'] ?? 0,
+        deaths: data['four_three_deaths_bedwars'] ?? 0,
+        finalKills: data['four_three_final_kills_bedwars'] ?? 0,
+        finalDeaths: data['four_three_final_deaths_bedwars'] ?? 0,
+        wins: data['four_three_wins_bedwars'] ?? 0,
+        losses: data['four_three_losses_bedwars'] ?? 0,
+        bedsBroken: data['four_three_beds_broken_bedwars'] ?? 0,
+        bedsLost: data['four_three_beds_lost_bedwars'] ?? 0,
+      ),
+      fours: BedwarsModeStats(
+        kills: data['four_four_kills_bedwars'] ?? 0,
+        deaths: data['four_four_deaths_bedwars'] ?? 0,
+        finalKills: data['four_four_final_kills_bedwars'] ?? 0,
+        finalDeaths: data['four_four_final_deaths_bedwars'] ?? 0,
+        wins: data['four_four_wins_bedwars'] ?? 0,
+        losses: data['four_four_losses_bedwars'] ?? 0,
+        bedsBroken: data['four_four_beds_broken_bedwars'] ?? 0,
+        bedsLost: data['four_four_beds_lost_bedwars'] ?? 0,
+      ),
+    );
+  }
+
+  factory BedwarsStats.fromJson(Map<String, dynamic> json) {
+    return BedwarsStats(
+      experience: json['experience'] ?? 500,
+      coins: json['coins'] ?? 0,
+      overall: BedwarsModeStats.fromJson(json['overall']),
+      solo: BedwarsModeStats.fromJson(json['solo']),
+      doubles: BedwarsModeStats.fromJson(json['doubles']),
+      threes: BedwarsModeStats.fromJson(json['threes']),
+      fours: BedwarsModeStats.fromJson(json['fours']),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'experience': experience,
+      'coins': coins,
+      'overall': overall.toJson(),
+      'solo': solo.toJson(),
+      'doubles': doubles.toJson(),
+      'threes': threes.toJson(),
+      'fours': fours.toJson(),
+    };
+  }
 
   double get level {
     int exp = experience.toInt();
@@ -122,32 +149,6 @@ class BedwarsStats {
       < 3000 => '§b[${raw[0]}§3${raw.substring(1, 3)}§9${raw[3]}⚝§1]',
       >= 3000 => '§e[${raw[0]}§6${raw.substring(1, 3)}§c${raw[3]}⚝§4]',
       _ => '§7[$raw✫]'
-    };
-  }
-
-  // Create a factory constructor to create a BedwarsStats object from JSON
-  factory BedwarsStats.fromJson(Map<String, dynamic> json) {
-    return BedwarsStats(
-      experience: json['experience'] ?? 500,
-      coins: json['coins'] ?? 0,
-      overall: BedwarsModeStats.fromJson(json['overall']),
-      solo: BedwarsModeStats.fromJson(json['solo']),
-      doubles: BedwarsModeStats.fromJson(json['doubles']),
-      threes: BedwarsModeStats.fromJson(json['threes']),
-      fours: BedwarsModeStats.fromJson(json['fours']),
-    );
-  }
-
-  // Create a method to convert the BedwarsStats object to JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'experience': experience,
-      'coins': coins,
-      'overall': overall.toJson(),
-      'solo': solo.toJson(),
-      'doubles': doubles.toJson(),
-      'threes': threes.toJson(),
-      'fours': fours.toJson(),
     };
   }
 }

@@ -52,30 +52,36 @@ class _TrackerScreenState extends State<TrackerScreen> {
           SizedBox(width: 15),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Chrono(session.startTime),
-          ...session.records.isEmpty
-              ? []
-              : [
-                  StatsText(data: {'Duel Wins': session.records.last.duelsStats.overall.wins}),
-                  StatsText(data: {'Duel Deaths': session.records.last.duelsStats.overall.losses}),
-                ],
-          MainButton(
-            text: 'End',
-            callback: () {
-              refresher.cancel();
-              session.end();
-              Provider.of<SessionsProvider>(context, listen: false).addSession(session);
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const TrackerSettingScreen(),
-                ),
-              );
-            },
-          )
-        ],
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Chrono(session.startTime),
+            ...session.records.isEmpty
+                ? []
+                : [
+                    StatsText(data: {'Duel Wins': session.records.last.duelsStats.overall.wins}),
+                    StatsText(data: {'Duel Deaths': session.records.last.duelsStats.overall.losses}),
+                  ],
+            Expanded(child: Container()),
+            MainButton(
+              text: 'End',
+              callback: () {
+                refresher.cancel();
+                session.end();
+                Provider.of<SessionsProvider>(context, listen: false).addSession(session);
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const TrackerSettingScreen(),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
+              height: 100,
+            )
+          ],
+        ),
       ),
     );
   }

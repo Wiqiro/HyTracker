@@ -32,8 +32,8 @@ class SessionsProvider with ChangeNotifier {
           return Session.fromJson(session as Map<String, dynamic>);
         }).toList();
       }
-    } catch (error) {
-      print(error);
+    } catch (_) {
+      rethrow;
     }
   }
 }
