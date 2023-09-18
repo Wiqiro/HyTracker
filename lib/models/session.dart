@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hytracker/models/player.dart';
 import 'package:hytracker/providers/user.dart';
-import 'package:hytracker/utils/hypixel_api_wrapper.dart' as wrapper;
+import 'package:hytracker/utils/api_wrapper.dart' as wrapper;
 import 'package:provider/provider.dart';
 
 class Session {
@@ -10,16 +10,16 @@ class Session {
 
   List<Player> _records = [];
 
-  List<Player> get records {
-    return [..._records];
-  }
+  List<Player> get records => [..._records];
 
   Session();
 
   factory Session.fromJson(Map<String, dynamic> json) {
     final session = Session();
-    session.endTime = json['endTime'] != null ? DateTime.parse(json['endTime']) : null;
-    session._records = (json['records'] as List<dynamic>).map((recordJson) => Player.fromJson(recordJson)).toList();
+    session.endTime = json.containsKey('endTime') ? DateTime.parse(json['endTime']) : null;
+    session._records = json.containsKey('records')
+        ? (json['records'] as List<dynamic>).map((recordJson) => Player.fromJson(recordJson)).toList()
+        : [];
     return session;
   }
 
@@ -49,7 +49,7 @@ class Session {
     endTime = DateTime.now();
   }
 
-  bool get isActive {
-    return endTime == null;
-  }
+  bool get isActive => endTime == null;
+
+  bool get isEmpty => _records.isEmpty;
 }

@@ -69,7 +69,9 @@ class _TrackerScreenState extends State<TrackerScreen> {
               callback: () {
                 refresher.cancel();
                 session.end();
-                Provider.of<SessionsProvider>(context, listen: false).addSession(session);
+                if (!session.isEmpty) {
+                  Provider.of<SessionsProvider>(context, listen: false).addSession(session);
+                }
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
                     builder: (context) => const TrackerSettingScreen(),

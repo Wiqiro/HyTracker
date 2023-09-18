@@ -9,7 +9,6 @@ class Player {
   final String username;
   late final String formattedUsername;
 
-  //late final double networkLvl;
   late final int experience;
   late final int karma;
 

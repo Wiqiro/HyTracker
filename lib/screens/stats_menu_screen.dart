@@ -7,7 +7,7 @@ import 'stats_gamemodes_screens/bedwars_stats_screen.dart';
 import 'stats_gamemodes_screens/skywars_stats_screen.dart';
 import 'stats_gamemodes_screens/duels_stats_screen.dart';
 import '../models/player.dart';
-import '../utils/hypixel_api_wrapper.dart' as wrapper;
+import '../utils/api_wrapper.dart' as wrapper;
 import '../widgets/minecraft_text.dart';
 import '../widgets/search_bar.dart';
 import '../widgets/gamemode_card.dart';

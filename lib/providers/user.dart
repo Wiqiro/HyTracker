@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/player.dart';
-import '../utils/hypixel_api_wrapper.dart' as wrapper;
+import '../utils/api_wrapper.dart' as wrapper;
 
 class UserProvider with ChangeNotifier {
   late String uuid;
